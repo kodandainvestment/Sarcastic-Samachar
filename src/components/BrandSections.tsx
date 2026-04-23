@@ -401,7 +401,7 @@ export const ServicesSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 isolate sm:grid-cols-2 pt-8 lg:grid-cols-4 gap-24 mb-10" style={{ maxWidth: "900px", margin: "0 auto 40px" }}>
+        <div className="grid grid-cols-1 isolate sm:grid-cols-2 pt-8 lg:grid-cols-4 gap-24 mb-10" style={{ maxWidth: "950px", margin: "0 auto 40px" }}>
           {services.map((s, i) => (
             <div key={s.title} className="relative">
               {/* left gold accent bar - sibling to card, half outside */}
@@ -998,7 +998,7 @@ export const AboutSection = () => (
           }}
         >
 
-          " Hum sirf content nahi, Viral Trends banate hain jo scroll ko Stop aur fingers ko Share dabane par majboor karte hain "
+          Hum sirf content nahi, Viral Trends banate hain jo scroll ko Stop aur fingers ko Share dabane par majboor karte hain
         </motion.div>
       </div>
 
@@ -1075,45 +1075,39 @@ export const ProcessSection = () => (
           <motion.div
             key={s.title}
             {...fadeUp(i * 0.1)}
-            className="flex flex-col items-center justify-center text-center p-12  process-card"
-
-            // flex flex-col items-center justify-center text-center p-4 
-
+            className="flex flex-col items-center justify-center text-center p-12 process-card relative"
             style={{
-              background: "rgba(56, 56, 61, 0.95)",
-              borderLeft: "2px solid rgba(252,198,46,0.8)",
-              borderRight: "2px solid rgba(252,198,46,0.8)",
-              borderTop: "none",
-              borderBottom: "none",
-              border: "1.3px solid rgba(252,198,46,0.10)",
-              borderRadius: "20px",
+              background: "rgb(50, 50, 46)",
+              borderRadius: "18px",
               width: "160px",
-              height: "140px",
+              height: "160px",
               padding: "14px 10px",
-
-
-              boxShadow: `
-    0 0 0 1px rgba(252,198,46,0.15),   /* outer subtle ring */
-    0 8px 25px rgba(0,0,0,0.3),        /* depth */
-    inset 0 0 12px rgba(252,198,46,0.08) /* inner glow */
-  `,
+              boxShadow: "0 4px 18px rgba(0,0,0,0.35)",
+              position: "relative",
             }}
           >
+            {/* Top-left: horizontal fade */}
+            <span style={{ position:"absolute", top:0, left:18, width:"calc(50% - 18px)", height:"2px", background:"linear-gradient(to right, rgb(200,155,40) 0%, transparent 100%)" }} />
+            {/* Top-left: vertical fade */}
+            <span style={{ position:"absolute", top:18, left:0, width:"2px", height:"calc(50% - 18px)", background:"linear-gradient(to bottom, rgb(200,155,40) 0%, transparent 100%)" }} />
+            {/* Top-left: corner arc via border */}
+            <span style={{ position:"absolute", top:0, left:0, width:"18px", height:"18px", borderTop:"2px solid rgb(200,155,40)", borderLeft:"2px solid rgb(200,155,40)", borderTopLeftRadius:"18px" }} />
 
-            <span className="corner tl"></span>
-            <span className="corner tr"></span>
-            <span className="corner bl"></span>
-            <span className="corner br"></span>
-            {/* <s.icon size={56} strokeWidth={2.5} style={iconGradStyle} /> */}
+            {/* Bottom-right: horizontal fade */}
+            <span style={{ position:"absolute", bottom:0, right:18, width:"calc(50% - 18px)", height:"2px", background:"linear-gradient(to left, rgb(200,155,40) 0%, transparent 100%)" }} />
+            {/* Bottom-right: vertical fade */}
+            <span style={{ position:"absolute", bottom:18, right:0, width:"2px", height:"calc(50% - 18px)", background:"linear-gradient(to top, rgb(200,155,40) 0%, transparent 100%)" }} />
+            {/* Bottom-right: corner arc via border */}
+            <span style={{ position:"absolute", bottom:0, right:0, width:"18px", height:"18px", borderBottom:"2px solid rgb(200,155,40)", borderRight:"2px solid rgb(200,155,40)", borderBottomRightRadius:"18px" }} />
 
             <img
               src={s.icon}
               alt={s.title}
-              className="w-[80px] h-[80px] mx-auto object-contain mb-2"
+              className="w-[80px] h-[80px] mx-auto object-contain mb-2 relative z-10"
             />
 
             <p
-              className="font-body text-[rgb(252,198,46)] break-words mb-4 whitespace-normal"
+              className="font-body text-[rgb(252,198,46)] break-words mb-4 whitespace-normal relative z-10"
               style={{ whiteSpace: "pre-line", lineHeight: 1.1, fontSize: "clamp(12px, 1.20vw, 14px)", fontFamily: "Poppins, sans-serif", fontWeight: 200 }}
             >
               {s.title}

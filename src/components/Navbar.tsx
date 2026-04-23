@@ -75,9 +75,6 @@ const Navbar = () => {
        <motion.button
   onClick={() => scrollTo("#collaborate")}
   className="px-5 py-2 rounded-full relative overflow-hidden"
-
-
-
   style={{
     background: "rgb(30,28,32)",
     fontFamily: "'Poppins', sans-serif",
@@ -86,6 +83,8 @@ const Navbar = () => {
     letterSpacing: "0.05em",
     padding: "2px",
   }}
+  onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 4px 18px 4px rgba(0,0,0,0.7)")}
+  onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
 >
 
   {/* 🔥 SHIMMER SWEEP EFFECT */}

@@ -13,7 +13,7 @@ const taglines = [
 
 const HeroSection = () => {
   const [index, setIndex] = useState(0);
-  const [isCtaHovered, setIsCtaHovered] = useState(false);
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -79,54 +79,37 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
           >
-            <motion.a
+            <a
               href="https://linktr.ee/SarcasticSamachar"
               target="_blank"
               rel="noopener noreferrer"
-              onHoverStart={() => setIsCtaHovered(true)}
-              onHoverEnd={() => setIsCtaHovered(false)}
-              className="px-5 py-2.5 rounded-full font-display text-base tracking-wider relative inline-flex items-center justify-center"
+              className="px-5 py-2.5 rounded-full inline-flex items-center justify-center transition-all duration-300"
               style={{
-                background: isCtaHovered ? "#000000" : "linear-gradient(90deg, rgb(233,160,35) 0%, rgb(252,198,46) 50%, rgb(233,160,35) 100%)",
-                color: isCtaHovered ? "rgb(252,198,46)" : "rgb(30,28,32)",
+                background: "linear-gradient(90deg, rgb(233,160,35) 0%, rgb(252,198,46) 50%, rgb(233,160,35) 100%)",
+                color: "rgb(30,28,32)",
                 fontFamily: "'Poppins', sans-serif",
                 fontWeight: 700,
                 minWidth: 130,
-                transition: "all 0.45s ease-in-out",
               }}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 18px 4px rgba(249,198,50,0.55)")}
+              onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
             >
-              <motion.span
-                animate={{ opacity: isCtaHovered ? 1 : 0 }}
-                transition={{ duration: 0.45, ease: "easeInOut" }}
-                aria-hidden
-                className="absolute inset-0 rounded-full pointer-events-none"
-                style={{
-                  padding: "2px",
-                  background: "linear-gradient(90deg, rgb(233,160,35) 0%, rgb(252,198,46) 50%, rgb(233,160,35) 100%)",
-                  WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                  WebkitMaskComposite: "xor",
-                  maskComposite: "exclude",
-                }}
-              />
               Follow Us
-            </motion.a>
-            <motion.a
+            </a>
+            <a
               href="#collaborate"
-              onHoverStart={() => setIsCtaHovered(true)}
-              onHoverEnd={() => setIsCtaHovered(false)}
-              className="px-5 py-2.5 rounded-full font-display text-base tracking-wider relative inline-flex items-center justify-center"
+              className="px-5 py-2.5 rounded-full inline-flex items-center justify-center relative transition-all duration-300"
               style={{
-                background: isCtaHovered ? "linear-gradient(90deg, rgb(233,160,35) 0%, rgb(252,198,46) 50%, rgb(233,160,35) 100%)" : "#000000",
+                background: "#000000",
                 fontFamily: "'Poppins', sans-serif",
                 fontWeight: 700,
                 minWidth: 130,
-                transition: "all 0.45s ease-in-out",
               }}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 18px 4px rgba(249,198,50,0.55)")}
+              onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
             >
               {/* Gradient border */}
-              <motion.span
-                animate={{ opacity: isCtaHovered ? 0 : 1 }}
-                transition={{ duration: 0.45, ease: "easeInOut" }}
+              <span
                 aria-hidden
                 className="absolute inset-0 rounded-full pointer-events-none"
                 style={{
@@ -137,12 +120,8 @@ const HeroSection = () => {
                   maskComposite: "exclude",
                 }}
               />
-              {/* Gradient text */}
-              <span style={{ color: isCtaHovered ? "rgb(30,28,32)" : "rgb(252,198,46)", transition: "color 0.45s ease-in-out" }}>
-                Collaborate
-                
-              </span>
-            </motion.a>
+              <span style={{ color: "rgb(252,198,46)" }}>Collaborate</span>
+            </a>
           </motion.div>
         </div>
 
