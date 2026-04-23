@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@700;800&family=Nunito:wght@400;600;700&display=swap');
+
+@font-face {
+  font-family: 'FirstBunny';
+  src: url('./assets/FirstBunny.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 5% 12%;
+    --foreground: 45 20% 90%;
+
+    --card: 30 5% 16%;
+    --card-foreground: 45 20% 90%;
+
+    --popover: 30 5% 14%;
+    --popover-foreground: 45 20% 90%;
+
+    --primary: 40 80% 55%;
+    --primary-foreground: 30 5% 10%;
+
+    --secondary: 30 5% 20%;
+    --secondary-foreground: 45 20% 90%;
+
+    --muted: 30 5% 18%;
+    --muted-foreground: 40 10% 55%;
+
+    --accent: 40 90% 50%;
+    --accent-foreground: 30 5% 10%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 15% 22%;
+    --input: 30 5% 20%;
+    --ring: 40 80% 55%;
+
+    --radius: 0.75rem;
+
+    --gold: 40 80% 55%;
+    --gold-glow: 40 90% 65%;
+    --gold-dark: 38 70% 40%;
+    --dark-surface: 30 5% 14%;
+    --darker-surface: 30 5% 10%;
+
+    --font-display: 'Bangers', cursive;
+    --font-body: 'Outfit', sans-serif;
+
+    --sidebar-background: 30 5% 10%;
+    --sidebar-foreground: 45 20% 90%;
+    --sidebar-primary: 40 80% 55%;
+    --sidebar-primary-foreground: 30 5% 10%;
+    --sidebar-accent: 30 5% 18%;
+    --sidebar-accent-foreground: 45 20% 90%;
+    --sidebar-border: 40 15% 22%;
+    --sidebar-ring: 40 80% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: 0.03em;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    background: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-glow)) 50%, hsl(var(--gold)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-gradient-gold {
+    background: linear-gradient(135deg, hsl(var(--gold-dark)), hsl(var(--gold)), hsl(var(--gold-glow)));
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px hsl(var(--gold) / 0.3), 0 0 60px hsl(var(--gold) / 0.1);
+  }
+
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+  .card-hover:hover {
+    transform: translateY(-4px) rotate(-0.5deg);
+    box-shadow: 0 12px 40px hsl(var(--gold) / 0.15);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.process-card {
+  position: relative;
+  background: rgba(56, 56, 61, 0.95);
+  border-radius: 20px;
+  width: 160px;
+  height: 140px;
+  padding: 14px 10px;
+  overflow: hidden;
+
+  box-shadow: 
+    0 8px 25px rgba(0,0,0,0.3),
+    inset 0 0 12px rgba(252,198,46,0.08);
+}
+
+/* ALL CORNERS BASE */
+.corner {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgba(252,198,46,0.9);
+}
+
+/* TOP LEFT */
+.corner.tl {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 20px; /* MATCH CARD */
+}
+
+/* TOP RIGHT */
+.corner.tr {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+  border-top-right-radius: 20px;
+}
+
+/* BOTTOM LEFT */
+.corner.bl {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+  border-bottom-left-radius: 20px;
+}
+
+/* BOTTOM RIGHT */
+.corner.br {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 20px;
+}
