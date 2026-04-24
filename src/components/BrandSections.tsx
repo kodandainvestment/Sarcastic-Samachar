@@ -550,43 +550,39 @@ export const WhyUsSection = () => (
         }}
       />
 
-      <div className="flex flex-col items-center gap-4 max-w-xl mt-16 mx-auto" style={{ paddingLeft: "140px" }}>
+      {/* Mobile: centered, no stagger */}
+      <div className="flex md:hidden flex-col items-center gap-4 max-w-xl mt-16 mx-auto px-4">
+        {whyPoints.map((point, i) => (
+          <motion.div key={i} {...fadeUp(i * 0.12)} className="w-full">
+            <motion.div
+              whileHover={{ y: -10, scale: 1.03 }}
+              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+              className="px-5 py-4 rounded-2xl font-body text-base text-white/90"
+              style={{ background: "rgba(255,255,255,0.05)", border: "2px solid rgba(249,198,50,0.7)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
+            >
+              {point}
+            </motion.div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Desktop: paddingLeft + stagger */}
+      <div className="hidden md:flex flex-col items-center gap-4 max-w-xl mt-16 mx-auto" style={{ paddingLeft: "140px" }}>
         {whyPoints.map((point, i) => (
           <motion.div
             key={i}
             {...fadeUp(i * 0.12)}
-            className="flex pr-0 gap-0 w-full"
+            className="flex gap-0 w-full"
             style={{ marginLeft: i % 2 !== 0 ? `${(i + 1) * 40}px` : "0px" }}
           >
-            {/* <span
-              className="shrink-0 font-display"
-              style={{ fontFamily: "poppin, sans-serif", fontSize: "clamp(28px, 3vw, 42px)", fontWeight: 200, minWidth: "48px", color: "rgba(255,255,255,0.9)", WebkitMaskImage: "linear-gradient(to bottom, black 10%, transparent 80%)", maskImage: "linear-gradient(to bottom, black 10%, transparent 80%)" }}
-            >
-              {String(i + 1).padStart(2, "0")}
-            </span> */}
-
-
-
             <motion.div
               whileHover={{ y: -10, scale: 1.03 }}
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
               className="flex-1 px-5 py-4 rounded-2xl font-body text-base text-white/90"
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "2px solid rgba(249,198,50,0.7)",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)"
-              }}
-            >
-              {point}
-            </motion.div>
-
-            {/* <div
-              className="flex-1 px-5 py-4 rounded-2xl font-body text-base text-white/90"
               style={{ background: "rgba(255,255,255,0.05)", border: "2px solid rgba(249,198,50,0.7)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
             >
               {point}
-            </div> */}
+            </motion.div>
           </motion.div>
         ))}
       </div>
