@@ -205,18 +205,44 @@ export const CaseStudiesSection = () => {
           />
           {/* <motion.div layout className="w-full grid grid-cols-1 md:grid-cols-3" style={{ gap: "8px", maxWidth: "900px", margin: "0 auto", alignItems: "center" }}> */}
 
+          {/* Mobile: horizontal scroll of case study cards */}
+        <div
+          className="md:hidden flex w-full pt-4 pb-4"
+          style={{ overflowX: "auto", flexWrap: "nowrap", gap: "16px", scrollbarWidth: "thin", scrollbarColor: "rgba(252,198,46,0.5) transparent" }}
+        >
+            {cases.map((c, i) => (
+              <div
+                key={c.brand}
+                className="flex-shrink-0 p-4 py-6 flex flex-col justify-between rounded-3xl"
+                style={{
+                  width: "240px",
+                  minHeight: "200px",
+                  background: i === 1 ? "linear-gradient(135deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))" : "rgb(38,36,32)",
+                  border: i === 1 ? "none" : "2px solid rgba(252,198,46,0.6)",
+                  boxShadow: i === 1 ? "0 20px 40px rgba(0,0,0,0.35), 0 0 25px rgba(249,198,50,0.25)" : "0 10px 25px rgba(0,0,0,0.25)",
+                }}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-3 gap-2">
+                    <span className="font-display text-xl uppercase" style={i === 1 ? { color: "#1a1a1a", fontFamily: "Impact, sans-serif", fontWeight: 400 } : { background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontFamily: "Impact, sans-serif", fontWeight: 400 }}>{c.brand}</span>
+                    <span style={{ height: "24px", display: "inline-flex", alignItems: "center", justifyContent: "center", border: "1.5px solid rgba(255,255,255,0.8)", borderRadius: "999px", padding: "0 8px", color: i === 1 ? "#1a1a1a" : "rgba(252,198,46,0.9)", fontFamily: "Poppins, sans-serif", fontSize: "10px", whiteSpace: "nowrap" }}>{c.category}</span>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={i === 1 ? { color: "#1a1a1a", fontFamily: "Poppins, sans-serif", fontWeight: 300 } : { color: "rgba(252,198,46,0.85)", fontFamily: "Poppins, sans-serif", fontWeight: 300 }}>{c.desc}</p>
+                </div>
+                <div className="flex justify-between pt-4">
+                  <p className="font-display text-base uppercase" style={i === 1 ? { color: "#1a1a1a", fontFamily: "Impact, sans-serif", fontWeight: 400 } : { color: "rgba(252,198,46,0.9)", fontFamily: "Impact, sans-serif", fontWeight: 400 }}>{c.result}</p>
+                  <p className="font-display text-base uppercase" style={i === 1 ? { color: "#1a1a1a", fontFamily: "Impact, sans-serif", fontWeight: 400 } : { color: "rgba(252,198,46,0.9)", fontFamily: "Impact, sans-serif", fontWeight: 400 }}>{c.engagement}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: 3D carousel */}
           <motion.div
             layout
-            className="w-full grid grid-cols-1 md:grid-cols-3"
-            style={{
-              gap: "8px",
-              maxWidth: "900px",
-              margin: "0 auto",
-              alignItems: "center",
-              perspective: "1200px", // 🔥 IMPORTANT
-            }}
+            className="hidden md:grid md:grid-cols-3"
+            style={{ gap: "8px", maxWidth: "900px", margin: "0 auto", alignItems: "center", perspective: "1200px" }}
           >
-
             {order.map((dataIndex, pos) => {
               const c = cases[dataIndex];
               const isCenter = pos === 1;
@@ -226,125 +252,26 @@ export const CaseStudiesSection = () => {
                   layoutId={`card-${dataIndex}`}
                   onClick={() => handleClick(pos)}
                   className="p-4 py-8 flex flex-col justify-center gap-4 w-full cursor-pointer mt-8 rounded-3xl h-72"
-                  // animate={{ scale: isCenter ? 1.18 : 0.92 }}
-
-                  animate={{
-                    scale: isCenter ? 1.0 : 0.88,
-                    rotateY: pos === 0 ? 18 : pos === 2 ? -18 : 0,
-                    x: pos === 0 ? 10 : pos === 2 ? -10 : 0,
-                    z: isCenter ? 100 : -40,
-                  }}
-
+                  animate={{ scale: isCenter ? 1.0 : 0.88, rotateY: pos === 0 ? 18 : pos === 2 ? -18 : 0, x: pos === 0 ? 10 : pos === 2 ? -10 : 0, z: isCenter ? 100 : -40 }}
                   transition={{ type: "spring", stiffness: 120, damping: 30 }}
-                  //             style={{
-                  //                transformStyle: "preserve-3d",
-                  //               //  filter: isCenter ? "none" : "blur(1px)",
-                  //               background: isCenter ? "linear-gradient(135deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))" : "rgba(255,255,255,0.05)",
-                  //               borderRadius: "1.5rem",
-                  //               zIndex: isCenter ? 10 : 7,
-                  //               // boxShadow: isCenter ? "0 0 10px 2px rgba(249,198,50,0.1), 0 0 20px 4px rgba(249,198,50,0.05)" : "none",
-                  //               boxShadow: isCenter
-                  // ? "0 20px 40px rgba(0,0,0,0.35), 0 0 25px rgba(249,198,50,0.25)"
-                  // : "0 5px 15px rgba(0,0,0,0.2)",
-                  //               backdropFilter: isCenter ? "none" : "blur(12px)",
-                  //               WebkitBackdropFilter: isCenter ? "none" : "blur(12px)",
-                  //               border: isCenter ? "none" : "2px solid rgba(249,198,50,0.6)",
-
-                  //             }}
-
-
                   style={{
-                    transformStyle: "preserve-3d",
-                    borderRadius: "1.5rem",
-                    zIndex: isCenter ? 10 : 7,
-
-                    background: isCenter
-                      ? "linear-gradient(135deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))"
-                      : pos === 0
-                        ? "linear-gradient(rgb(38,36,32), rgb(38,36,32)) padding-box, linear-gradient(to bottom, rgba(252,198,46,0.9) 0%, rgba(252,198,46,0) 100%) border-box"
-                        : "linear-gradient(rgb(38,36,32), rgb(38,36,32)) padding-box, linear-gradient(to top, rgba(252,198,46,0.9) 0%, rgba(252,198,46,0) 100%) border-box",
-
+                    transformStyle: "preserve-3d", borderRadius: "1.5rem", zIndex: isCenter ? 10 : 7,
+                    background: isCenter ? "linear-gradient(135deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))" : pos === 0 ? "linear-gradient(rgb(38,36,32), rgb(38,36,32)) padding-box, linear-gradient(to bottom, rgba(252,198,46,0.9) 0%, rgba(252,198,46,0) 100%) border-box" : "linear-gradient(rgb(38,36,32), rgb(38,36,32)) padding-box, linear-gradient(to top, rgba(252,198,46,0.9) 0%, rgba(252,198,46,0) 100%) border-box",
                     border: isCenter ? "none" : "2px solid transparent",
-
-                    boxShadow: isCenter
-                      ? "0 20px 40px rgba(0,0,0,0.35), 0 0 25px rgba(249,198,50,0.25)"
-                      : "0 10px 25px rgba(0,0,0,0.25)",
-
-                    backdropFilter: "blur(12px)",
-                    WebkitBackdropFilter: "blur(12px)",
-                  }} >
-
+                    boxShadow: isCenter ? "0 20px 40px rgba(0,0,0,0.35), 0 0 25px rgba(249,198,50,0.25)" : "0 10px 25px rgba(0,0,0,0.25)",
+                    backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+                  }}
+                >
                   <div>
                     <div className="flex items-center justify-between mb-3 gap-2">
-                      <span
-                        className="font-display text-2xl uppercase"
-                        style={isCenter
-                          ? { color: "#1a1a1a", fontWeight: 400, fontFamily: "Impact, sans-serif" }
-                          : {
-                            background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46))",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            backgroundClip: "text", fontWeight: 400, fontFamily: "Impact, sans-serif"
-                          }
-                        }
-                      >
-                        {c.brand}
-                      </span>
-                      {/* <span
-                    className="px-3 py-1 rounded-full text-xs font-body text-center"
-                    style={isCenter
-                      ? { border: "1.5px solid rgba(255,255,255,0.7)", color: "#1a1a1a", fontFamily: "Poppins, sans-serif", minWidth: "80px", display: "inline-block", fontSize: "11px" }
-                      : { border: "1.5px solid rgba(252,198,46,0.6)", color: "rgba(252,198,46,0.85)", fontFamily: "Poppins, sans-serif", minWidth: "80px", display: "inline-block", fontSize: "11px" }
-                    }
-                  >
-                    {c.category}
-                  </span> */}
-
-
-                      <span
-                        className="rounded-full text-xs font-body"
-                        style={{
-                          // ✅ SAME SIZE
-                          width: "150px",
-                          height: "28px",
-                          display: "inline-flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          borderRadius: "999px",
-                          whiteSpace: "nowrap",
-
-                          // ✅ ALWAYS WHITE BORDER
-                          border: "1.5px solid rgba(255,255,255,0.8)",
-
-                          // ✅ TEXT COLOR FOLLOWS CARD
-                          color: isCenter
-                            ? "#1a1a1a"
-                            : "rgba(252,198,46,0.9)",
-
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: "11px",
-
-                          transition: "all 0.3s ease", // ✨ smooth color change
-                        }}
-                      >
-                        {c.category}
-                      </span>
-
-
+                      <span className="font-display text-2xl uppercase" style={isCenter ? { color: "#1a1a1a", fontWeight: 400, fontFamily: "Impact, sans-serif" } : { background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontWeight: 400, fontFamily: "Impact, sans-serif" }}>{c.brand}</span>
+                      <span className="rounded-full text-xs font-body" style={{ width: "150px", height: "28px", display: "inline-flex", alignItems: "center", justifyContent: "center", borderRadius: "999px", whiteSpace: "nowrap", border: "1.5px solid rgba(255,255,255,0.8)", color: isCenter ? "#1a1a1a" : "rgba(252,198,46,0.9)", fontFamily: "Poppins, sans-serif", fontSize: "11px", transition: "all 0.3s ease" }}>{c.category}</span>
                     </div>
-                    <p className="font-body text-sm leading-relaxed" style={isCenter ? { color: "#1a1a1a", fontFamily: "Poppins, sans-serif", fontWeight: 300 } : { color: "rgba(252,198,46,0.85)", fontFamily: "Poppins, sans-serif", fontWeight: 300 }}>
-                      {c.desc}
-                    </p>
+                    <p className="font-body text-sm leading-relaxed" style={isCenter ? { color: "#1a1a1a", fontFamily: "Poppins, sans-serif", fontWeight: 300 } : { color: "rgba(252,198,46,0.85)", fontFamily: "Poppins, sans-serif", fontWeight: 300 }}>{c.desc}</p>
                   </div>
                   <div className="flex justify-between pt-4">
-                    <div>
-                      <p className="font-display text-lg uppercase" style={isCenter ? { color: "#1a1a1a", fontWeight: 400, fontFamily: "Impact, sans-serif" } : { color: "rgba(252,198,46,0.9)", fontWeight: 400, fontFamily: "Impact, sans-serif" }}>{c.result}</p>
-                      {/* <p className="text-xs" style={isCenter ? { color: "#333", fontFamily: "Poppins, sans-serif", fontWeight: 300 } : { color: "rgba(252,198,46,0.75)", fontFamily: "Poppins, sans-serif", fontWeight: 300 }}>Reach</p> */}
-                    </div>
-                    <div>
-                      <p className="font-display text-lg uppercase" style={isCenter ? { color: "#1a1a1a", fontWeight: 400, fontFamily: "Impact, sans-serif" } : { color: "rgba(252,198,46,0.9)", fontWeight: 400, fontFamily: "Impact, sans-serif" }}>{c.engagement}</p>
-                      {/* <p className="text-xs" style={isCenter ? { color: "#333", fontFamily: "Poppins, sans-serif", fontWeight: 300 } : { color: "rgba(252,198,46,0.75)", fontFamily: "Poppins, sans-serif", fontWeight: 300 }}>Engagement</p> */}
-                    </div>
+                    <p className="font-display text-lg uppercase" style={isCenter ? { color: "#1a1a1a", fontWeight: 400, fontFamily: "Impact, sans-serif" } : { color: "rgba(252,198,46,0.9)", fontWeight: 400, fontFamily: "Impact, sans-serif" }}>{c.result}</p>
+                    <p className="font-display text-lg uppercase" style={isCenter ? { color: "#1a1a1a", fontWeight: 400, fontFamily: "Impact, sans-serif" } : { color: "rgba(252,198,46,0.9)", fontWeight: 400, fontFamily: "Impact, sans-serif" }}>{c.engagement}</p>
                   </div>
                 </motion.div>
               );
@@ -639,7 +566,24 @@ export const ViralMemesSection = () => {
 
 
         </div>
-        <div className="relative flex items-center justify-center">
+        {/* Mobile: horizontal scroll of meme images */}
+        <div
+          className="md:hidden flex w-full pt-4 pb-4"
+          style={{ overflowX: "auto", flexWrap: "nowrap", gap: "12px", scrollbarWidth: "thin", scrollbarColor: "rgba(252,198,46,0.5) transparent" }}
+        >
+          {memeImages.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt="Meme"
+              className="flex-shrink-0 rounded-2xl object-contain cursor-pointer"
+              style={{ width: "200px", boxShadow: i === 2 ? "0 0 0 3px rgb(249,198,50), 0 0 20px rgba(249,198,50,0.4)" : "0 0 0 2px rgb(249,198,50)" }}
+            />
+          ))}
+        </div>
+
+        {/* Desktop: absolute-positioned carousel */}
+        <div className="hidden md:flex relative items-center justify-center">
           <div className="relative w-full mt-8" style={{ maxWidth: "1000px", height: "clamp(220px, 40vw, 390px)", margin: "0 auto" }}>
             {order.map((cardIndex, pos) => {
               const isCenter = pos === 2;
@@ -676,7 +620,7 @@ export const ViralMemesSection = () => {
             })}
           </div>
 
-          {/* Munna Bhaiya — right side, absolute to section edge */}
+          {/* Munna Bhaiya — right side */}
           <motion.img
             src={section5}
             alt="Munna Bhaiya"
@@ -688,7 +632,7 @@ export const ViralMemesSection = () => {
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
           />
         </div>
-      </div>
+        </div>
     </section>
   );
 };
@@ -834,11 +778,10 @@ export const AudienceSection = () => (
 
 
       {/* 🔥 Main 2 Column Layout */}
-      <div className="grid md:grid-cols-2 gap-0 items-center  max-w-5xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-0 items-center max-w-5xl mx-auto">
 
-
-        {/* ✅ RIGHT SIDE → CHARACTER IMAGE */}
-        <div className="flex justify-center md:justify-center relative">
+        {/* CHARACTER IMAGE — hidden on mobile */}
+        <div className="hidden md:flex justify-center relative">
           <motion.img
             src={section7}
             alt="Audience character"
@@ -852,8 +795,8 @@ export const AudienceSection = () => (
         </div>
 
 
-        {/* ✅ LEFT SIDE → CARDS */}
-        <div className="flex flex-col gap-6 md:-ml-24">
+        {/* CARDS */}
+        <div className="flex flex-col gap-6 items-center md:items-start md:-ml-24">
 
           {/* 🔹 Row 1 */}
           <div className="flex gap-4">
