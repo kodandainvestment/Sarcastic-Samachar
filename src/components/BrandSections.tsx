@@ -81,7 +81,7 @@ export const BrandsSection = () => (
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative rounded-3xl px-4 pb-12 mr-24  w-full z-10"
+          className="relative rounded-3xl px-4 pb-12 md:mr-24 w-full z-10"
           // style={{
           //   maxWidth: "620px",
           //   background: "rgba(65, 60, 53, 0.95)",
@@ -116,7 +116,7 @@ export const BrandsSection = () => (
           </p>
 
           {/* Industry tags — 3 col grid */}
-          <div className="grid grid-cols-3 gap-6 px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 px-4 sm:px-8">
             {["FMCG", "Ed Tech", "Fashion", "Manufacture Sector", "D2C Brands", "Startups"].map((tag, i) => (
               <motion.span
                 key={tag}
@@ -138,7 +138,7 @@ export const BrandsSection = () => (
         <motion.img
           src={munnaBhaiya}
           alt="Munna Bhaiya"
-          className="hidden md:block absolute bottom-0 w-auto object-contain pointer-events-none select-none"
+          className="hidden lg:block absolute bottom-0 w-auto object-contain pointer-events-none select-none"
           style={{ height: "clamp(300px, 42vw, 500px)", zIndex: 20, right: "170px", bottom: "-90px" }}
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -360,7 +360,7 @@ export const CaseStudiesSection = () => {
 const services: { icon: React.ReactNode; title: string; desc: string }[] = [
   { icon: <FaLaughSquint size={30} />, title: "Meme Marketing Campaigns", desc: "Memes ke through apka product dikhega bhi or pure india me bikega bhi... " },
   { icon: <MdCampaign size={32} />, title: "Brand\nPromotions", desc: "Promotions ese ki audience bolne pe majboor ho jaye mast brand h re baba." },
-  { icon: <FaUsers size={32} />, title: "Page\nShoutouts", desc: "Shoutout to bahana hai asli kam toh apke page ki Engagement badhana hai ." },
+  { icon: <FaUsers size={32} />, title: "Page\nShoutouts", desc: "Shoutout to bahana hai asli kam toh apke page ki Engagement badhana hai." },
   { icon: <RiBarChartFill size={32} />, title: "Social\nMedia Growth", desc: "Kursi ki peti bandh lijiye kuki apki social media growth badhne vali hai ." },
 ];
 
@@ -401,9 +401,9 @@ export const ServicesSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 isolate sm:grid-cols-2 pt-8 lg:grid-cols-4 gap-24 mb-10" style={{ maxWidth: "950px", margin: "0 auto 40px" }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 pt-8 lg:grid-cols-4 gap-8 mb-10" style={{ maxWidth: "950px", margin: "0 auto 40px" }}>
           {services.map((s, i) => (
-            <div key={s.title} className="relative">
+            <div key={s.title} className="relative flex justify-center">
               {/* left gold accent bar - sibling to card, half outside */}
               <div
                 className="absolute top-7 bottom-40 rounded-full"
@@ -411,7 +411,7 @@ export const ServicesSection = () => {
               />
               <motion.div
                 {...fadeUp(i * 0.1)}
-                className="relative z-10 rounded-3xl p-6 flex flex-col items-center text-center w-[220px] h-[260px] gap-3 group cursor-default overflow-hidden min-h-[200px] border border-transparent hover:border-1 transition-all duration-0"
+                className="relative z-10 rounded-3xl p-6 flex flex-col items-center text-center w-full max-w-[220px] h-[260px] gap-3 group cursor-default overflow-hidden min-h-[200px] border border-transparent hover:border-1 transition-all duration-0"
                 style={{ background: "rgb(62, 62, 58)" }}
                 whileHover={{ borderColor: "rgb(249, 198, 50)" }}
                 onMouseEnter={handleCardEnter}
@@ -542,12 +542,12 @@ export const WhyUsSection = () => (
         }}
       />
 
-      <div className="flex flex-col items-center gap-4 max-w-xl mt-16 mx-auto" style={{ paddingLeft: "140px" }} >
+      <div className="flex flex-col items-center gap-4 max-w-xl mt-16 mx-auto" style={{ paddingLeft: "140px" }}>
         {whyPoints.map((point, i) => (
           <motion.div
             key={i}
             {...fadeUp(i * 0.12)}
-            className="flex pr-0  gap-0 w-full"
+            className="flex pr-0 gap-0 w-full"
             style={{ marginLeft: i % 2 !== 0 ? `${(i + 1) * 40}px` : "0px" }}
           >
             {/* <span
@@ -636,7 +636,7 @@ export const ViralMemesSection = () => {
 
         </div>
         <div className="relative flex items-center justify-center">
-          <div className="relative w-full mt-8" style={{ maxWidth: "1000px", height: "390px", margin: "0 auto" }}>
+          <div className="relative w-full mt-8" style={{ maxWidth: "1000px", height: "clamp(220px, 40vw, 390px)", margin: "0 auto" }}>
             {order.map((cardIndex, pos) => {
               const isCenter = pos === 2;
               const stackShiftX = -250;
@@ -660,7 +660,7 @@ export const ViralMemesSection = () => {
                     opacity: opacities[pos],
                   }}
                   transition={{ type: "spring", stiffness: 160, damping: 22 }}
-                  className="rounded-2xl object-contain w-[280px] absolute left-1/2 -translate-x-1/2 cursor-pointer"
+                  className="rounded-2xl object-contain w-[clamp(160px,28vw,280px)] absolute left-1/2 -translate-x-1/2 cursor-pointer"
                   style={{
                     top: "0px",
                     zIndex: zIndexes[pos],
@@ -676,7 +676,7 @@ export const ViralMemesSection = () => {
           <motion.img
             src={section5}
             alt="Munna Bhaiya"
-            className="hidden md:block absolute bottom-0 w-auto object-contain pointer-events-none select-none"
+            className="hidden lg:block absolute bottom-0 w-auto object-contain pointer-events-none select-none"
             style={{ height: "clamp(300px, 42vw, 500px)", zIndex: 20, right: "90px", bottom: "-50px" }}
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -850,7 +850,7 @@ export const AudienceSection = () => (
               <motion.div
                 key={a.label}
                 {...fadeUp(i * 0.1)}
-                className="rounded-2xl w-44 h-36 border border-border bg-card/60 
+                className="rounded-2xl w-36 h-28 sm:w-44 sm:h-36 border border-border bg-card/60 
         flex flex-col justify-center items-center text-center
         hover:border-primary/30 transition-colors"
                 style={{
@@ -885,7 +885,7 @@ export const AudienceSection = () => (
               <motion.div
                 key={a.label}
                 {...fadeUp(i * 0.1)}
-                className="rounded-2xl w-44 h-36 border border-border bg-card/60 
+                className="rounded-2xl w-36 h-28 sm:w-44 sm:h-36 border border-border bg-card/60 
         flex flex-col justify-center items-center text-center
         hover:border-primary/30 transition-colors"
                 style={{
@@ -946,15 +946,12 @@ export const AboutSection = () => (
 
 
       {/* 3-col: left card | character | right card */}
-      <div className="relative flex flex-col md:flex-row items-center justify-center  mt-4" style={{ alignItems: "center", marginTop: "-20px", gap: "0px" }}>
+      <div className="relative flex flex-col md:flex-row items-center justify-center mt-4 gap-6 md:gap-0" style={{ alignItems: "center", marginTop: "-20px" }}>
 
         {/* Left card */}
-
-
-
         <motion.div
           {...fadeUp(0.1)}
-          className="rounded-2xl w-[240px] md:w-[300px] p-6 glass-card md:-mr-16
+          className="rounded-2xl w-full max-w-[300px] md:w-[300px] p-6 glass-card md:-mr-16
   font-body text-base leading-relaxed text-center
   bg-[linear-gradient(90deg,rgb(233,160,35)_0%,rgb(252,198,46)_50%,rgb(233,160,35)_100%)] 
   bg-clip-text text-transparent"
@@ -984,7 +981,7 @@ export const AboutSection = () => (
 
         <motion.div
           {...fadeUp(0.1)}
-          className="rounded-2xl w-[240px] md:w-[300px] p-6 md:-ml-9
+          className="rounded-2xl w-full max-w-[300px] md:w-[300px] p-6 md:-ml-9
   font-body text-base leading-relaxed text-center
   bg-[linear-gradient(90deg,rgb(233,160,35)_0%,rgb(252,198,46)_50%,rgb(233,160,35)_100%)] 
   bg-clip-text text-transparent"
