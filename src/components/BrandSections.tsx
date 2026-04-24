@@ -401,10 +401,41 @@ export const ServicesSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 pt-8 lg:grid-cols-4 gap-8 mb-10" style={{ maxWidth: "950px", margin: "0 auto 40px" }}>
+        {/* Mobile: horizontal scroll */}
+        <div
+          className="lg:hidden flex pt-8 pb-4"
+          style={{ overflowX: "auto", flexWrap: "nowrap", gap: "24px", scrollbarWidth: "thin", scrollbarColor: "rgba(252,198,46,0.5) transparent" }}
+        >
+          {services.map((s, i) => (
+            <div key={s.title} className="relative flex-shrink-0" style={{ paddingLeft: "8px" }}>
+              <div
+                className="absolute rounded-full"
+                style={{ background: "rgba(249,198,50,0.9)", width: "10px", left: "3px", top: "28px", height: "80px", zIndex: 5 }}
+              />
+              <motion.div
+                {...fadeUp(i * 0.1)}
+                className="relative z-10 rounded-3xl p-6 flex flex-col items-center text-center gap-3 group cursor-default overflow-hidden border border-transparent"
+                style={{ background: "rgb(62, 62, 58)", width: "200px", height: "260px" }}
+                whileHover={{ borderColor: "rgb(249, 198, 50)" }}
+                onMouseEnter={handleCardEnter}
+                onMouseLeave={handleCardLeave}
+              >
+                <div className="relative w-14 h-24 z-10 rounded-full flex items-center justify-center transition-colors duration-300 icon-circle mt-0 text-white" style={{ background: "rgba(23, 23, 21, 0.21)" }}>
+                  {s.icon}
+                </div>
+                <p className="font-display relative z-10 whitespace-pre-line uppercase tracking-wide leading-snug text-white mb-2" style={{ fontFamily: "Impact, sans-serif", fontWeight: 400, fontSize: "16px" }}>
+                  {s.title}
+                </p>
+                <p className="text-sm text-white relative z-10 font-body leading-relaxed">{s.desc}</p>
+              </motion.div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden lg:grid lg:grid-cols-4 pt-8 gap-8 mb-10" style={{ maxWidth: "950px", margin: "0 auto 40px" }}>
           {services.map((s, i) => (
             <div key={s.title} className="relative flex justify-center">
-              {/* left gold accent bar - sibling to card, half outside */}
               <div
                 className="absolute top-7 bottom-40 rounded-full"
                 style={{ background: "rgba(249,198,50,0.9)", width: "10px", left: "-5px", zIndex: 5 }}
@@ -417,48 +448,25 @@ export const ServicesSection = () => {
                 onMouseEnter={handleCardEnter}
                 onMouseLeave={handleCardLeave}
               >
-
-                <div
-                  className="relative w-14 h-24 z-10 rounded-full flex items-center justify-center transition-colors duration-300 icon-circle mt-0 text-white group-hover:text-[rgb(249,198,50)]"
-                  style={{ background: "rgba(23, 23, 21, 0.21)" }}
-                >
+                <div className="relative w-14 h-24 z-10 rounded-full flex items-center justify-center transition-colors duration-300 icon-circle mt-0 text-white group-hover:text-[rgb(249,198,50)]" style={{ background: "rgba(23, 23, 21, 0.21)" }}>
                   {s.icon}
                 </div>
-
-
-                {/* title */}
-                <p
-                  className="font-display relative z-10 whitespace-pre-line uppercase tracking-wide leading-snug transition-colors duration-300 group-hover:text-[rgb(249,198,50)] text-white mb-2"
-                  style={{ fontFamily: "Impact, sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.2vw, 18px)" }}
-                >
+                <p className="font-display relative z-10 whitespace-pre-line uppercase tracking-wide leading-snug transition-colors duration-300 group-hover:text-[rgb(249,198,50)] text-white mb-2" style={{ fontFamily: "Impact, sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.2vw, 18px)" }}>
                   {s.title}
                 </p>
-
-                {/* desc */}
                 <p className="text-sm text-white relative z-10 font-body mb-4 leading-relaxed transition-colors duration-300 group-hover:text-[rgb(249,198,50)] text-white">
                   {s.desc}
                 </p>
-
                 <button
                   onClick={() => {
                     const el = document.getElementById('collaborate');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="absolute bottom-3 left-1/2 -translate-x-1/2
-  px-6 py-0 rounded-full text-sm font-semibold
-  flex items-center gap-1 whitespace-nowrap
-  opacity-0 translate-y-4
-  group-hover:opacity-100 group-hover:translate-y-0
-  transition-all duration-300 ease-out
-  hover:scale-105 hover:brightness-110 hover:shadow-[0_0_12px_rgba(249,198,50,0.6)] active:scale-95"
-                  style={{
-                    background: "linear-gradient(to right, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))",
-                    color: "#363333"
-                  }}
+                  className="absolute bottom-3 left-1/2 -translate-x-1/2 px-6 py-0 rounded-full text-sm font-semibold flex items-center gap-1 whitespace-nowrap opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out hover:scale-105 hover:brightness-110 hover:shadow-[0_0_12px_rgba(249,198,50,0.6)] active:scale-95"
+                  style={{ background: "linear-gradient(to right, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))", color: "#363333" }}
                 >
-                  Collab kro <FaRegHandshake/>
+                  Collab kro <FaRegHandshake />
                 </button>
-
               </motion.div>
             </div>
           ))}
@@ -704,26 +712,31 @@ const testimonials = [
 ];
 
 
+const TestimonialCard = ({ t, i }: { t: typeof testimonials[0]; i: number }) => (
+  <div
+    className="rounded-2xl border border-primary/80 bg-card/60 p-6 text-center flex flex-col items-center space-y-3 min-h-[150px] relative overflow-hidden flex-shrink-0 w-[220px] sm:w-[280px]"
+  >
+    <div className="absolute inset-0 pointer-events-none z-0" style={{ background: "radial-gradient(ellipse 70% 60% at 50% 80%, rgba(249,198,50,0.18) 0%, transparent 70%)" }} />
+    <div className="flex gap-0.5">
+      {Array.from({ length: t.stars }).map((_, s) => (
+        <Star key={s} size={14} className="text-primary fill-primary" />
+      ))}
+    </div>
+    <p className="font-body text-foreground text-base">{t.text}</p>
+    <p className="text-xs text-white text-muted-foreground font-body">{t.handle}</p>
+  </div>
+);
+
 export const TestimonialsSection = () => {
+  const row1 = testimonials.slice(0, 3);
+  const row2 = testimonials.slice(3);
+
   return (
     <section id="testimonials" className="py-24 border-b border-border bg-card/20">
-      <div className="container ">
-
-        {/* <motion.div {...fadeUp()}>
-          <div className="mb-24">
-          <SectionTitle
-            speaker="TESTIMONIALS"
-            quote="Itne log mere pe bharosa karke gaye hain re baba"
-          />
-          </div>
-        </motion.div> */}
-
-
-
-
+      <div className="container">
         {/* Header */}
         <motion.div
-          className="text-center mb-4"
+          className="text-center mb-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -738,34 +751,36 @@ export const TestimonialsSection = () => {
           </h2>
         </motion.div>
 
-
-        {/* ✅ GRID LAYOUT (No Scroll) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 items-stretch justify-items-center max-w-4xl mx-auto">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={t.handle}
-              {...fadeUp(i * 0.08)}
-              className="rounded-2xl border border-border bg-card/60 p-6 text-center flex flex-col items-center space-y-3  h-full min-h-[150px] w-[280px] border-primary/80 transition-colors relative overflow-hidden"
+        {/* Mobile: 2-row horizontal scroll */}
+        <div className="md:hidden flex flex-col gap-4 overflow-hidden">
+          {[row1, row2].map((row, ri) => (
+            <div
+              key={ri}
+              className="pb-2"
+              style={{
+                display: "flex",
+                flexWrap: "nowrap",
+                overflowX: "auto",
+                gap: "12px",
+                scrollbarWidth: "thin",
+                scrollbarColor: "rgba(252,198,46,0.5) transparent",
+              }}
             >
-              {/* center glow */}
-              <div className="absolute inset-0 pointer-events-none  z-0" style={{ background: "radial-gradient(ellipse 70% 60% at 50% 80%, rgba(249,198,50,0.18) 0%, transparent 70%)" }} />
-              <div className="flex gap-0.5">
-                {Array.from({ length: t.stars }).map((_, s) => (
-                  <Star key={s} size={14} className="text-primary fill-primary" />
-                ))}
-              </div>
-
-              <p className="font-body text-foreground text-base">
-                {t.text}
-              </p>
-
-              <p className="text-xs text-white text-muted-foreground font-body">
-                {t.handle}
-              </p>
-            </motion.div>
+              {row.map((t, i) => (
+                <TestimonialCard key={i} t={t} i={i} />
+              ))}
+            </div>
           ))}
         </div>
 
+        {/* Desktop: grid */}
+        <div className="hidden md:grid grid-cols-3 gap-8 items-stretch justify-items-center max-w-4xl mx-auto">
+          {testimonials.map((t, i) => (
+            <motion.div key={i} {...fadeUp(i * 0.08)}>
+              <TestimonialCard t={t} i={i} />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
