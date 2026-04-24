@@ -984,7 +984,7 @@ export const AboutSection = () => (
           src={section8}
           alt="About character"
           {...fadeUp(0.2)}
-          className="w-auto object-contain pointer-events-none select-none z-10"
+          className="hidden md:block w-auto object-contain pointer-events-none select-none z-10"
           style={{ height: "clamp(280px, 36vw, 460px)", marginTop: "-18px" }}
         />
 
