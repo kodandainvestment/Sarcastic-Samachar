@@ -39,14 +39,14 @@ const HeroSection = () => {
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex items-center container py-12 md:py-0 min-h-[80vh]">
+      <div className="flex-1 flex flex-col-reverse md:flex-row items-center container py-12 md:py-0 min-h-[80vh]">
 
         {/* LEFT — Text */}
-        <div className="w-full md:w-1/2 flex flex-col gap-6 z-10 pl-8 md:pl-16">
+        <div className="w-full md:w-1/2 flex flex-col gap-6 z-10 px-6 md:pl-16 text-center md:text-left">
 
           <motion.h1
             className="text-6xl md:text-8xl leading-[0.95] tracking-wide"
-            style={{ fontFamily: "'FirstBunny', cursive", fontWeight: 500, fontSize: "clamp(48px, 8vw, 90px)", background: "linear-gradient(90deg, rgb(233,160,35) 0%, rgb(252,198,46) 50%, rgb(233,160,35) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+            style={{ fontFamily: "'FirstBunny', cursive", fontWeight: 500, fontSize: "clamp(40px, 10vw, 90px)", background: "linear-gradient(90deg, rgb(233,160,35) 0%, rgb(252,198,46) 50%, rgb(233,160,35) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
             initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
@@ -74,7 +74,7 @@ const HeroSection = () => {
           </div>
 
           <motion.div
-            className="flex gap-4 flex-wrap mt-10"
+            className="flex gap-4 flex-wrap mt-6 justify-center md:justify-start"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
@@ -126,11 +126,11 @@ const HeroSection = () => {
         </div>
 
         {/* RIGHT — Character */}
-        <div className="hidden md:flex w-1/2 items-end justify-center relative h-full min-h-[80vh]">
+        <div className="flex md:w-1/2 items-end justify-center relative h-[280px] md:h-full md:min-h-[85vh] mb-6 md:mb-0">
           <motion.img
             src={character}
             alt="Sarcastic Samachar Character"
-            className="absolute bottom-0 right-0 w-auto max-h-[85vh] object-contain"
+            className="w-auto h-full max-h-[300px] md:max-h-[85vh] object-contain md:absolute md:bottom-0 md:right-0"
             style={{ mixBlendMode: "normal" }}
             initial={{ opacity: 0, x: 80, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}

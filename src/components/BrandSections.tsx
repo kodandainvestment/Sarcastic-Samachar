@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { CheckCircle2, Star } from "lucide-react";
 import munnaBhaiya from "@/assets/MunnaBhaiya.png";
 import csMunnaBhaiya from "@/assets/CSmunnabhaiya.png";
@@ -670,9 +670,22 @@ const TestimonialCard = ({ t, i }: { t: typeof testimonials[0]; i: number }) => 
 export const TestimonialsSection = () => {
   const row1 = testimonials.slice(0, 3);
   const row2 = testimonials.slice(3);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const CARD_WIDTH = 220;
+  const GAP = 12;
+  const totalDistance = row1.length * (CARD_WIDTH + GAP);
+  
+  const xRow1 = useTransform(scrollYProgress, [0, 1], [0, -totalDistance * 0.3]);
+  const xRow2 = useTransform(scrollYProgress, [0, 1], [-totalDistance * 0.3, 0]);
 
   return (
-    <section id="testimonials" className="py-24 border-b border-border bg-card/20">
+    <section id="testimonials" className="py-24 border-b border-border bg-card/20" ref={containerRef}>
       <div className="container">
         {/* Header */}
         <motion.div
@@ -691,26 +704,18 @@ export const TestimonialsSection = () => {
           </h2>
         </motion.div>
 
-        {/* Mobile: 2-row horizontal scroll */}
+        {/* Mobile: 2-row scroll-animated */}
         <div className="md:hidden flex flex-col gap-4 overflow-hidden">
-          {[row1, row2].map((row, ri) => (
-            <div
-              key={ri}
-              className="pb-2"
-              style={{
-                display: "flex",
-                flexWrap: "nowrap",
-                overflowX: "auto",
-                gap: "12px",
-                scrollbarWidth: "thin",
-                scrollbarColor: "rgba(252,198,46,0.5) transparent",
-              }}
-            >
-              {row.map((t, i) => (
-                <TestimonialCard key={i} t={t} i={i} />
-              ))}
-            </div>
-          ))}
+          <motion.div className="flex gap-3" style={{ x: xRow1, flexWrap: "nowrap" }}>
+            {row1.map((t, i) => (
+              <TestimonialCard key={i} t={t} i={i} />
+            ))}
+          </motion.div>
+          <motion.div className="flex gap-3" style={{ x: xRow2, flexWrap: "nowrap" }}>
+            {row2.map((t, i) => (
+              <TestimonialCard key={i} t={t} i={i} />
+            ))}
+          </motion.div>
         </div>
 
         {/* Desktop: grid */}
@@ -927,7 +932,7 @@ export const AboutSection = () => (
           src={section8}
           alt="About character"
           {...fadeUp(0.2)}
-          className="hidden md:block w-auto object-contain pointer-events-none select-none z-10"
+          className="w-auto object-contain pointer-events-none select-none z-10"
           style={{ height: "clamp(280px, 36vw, 460px)", marginTop: "-18px" }}
         />
 

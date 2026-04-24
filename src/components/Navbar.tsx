@@ -16,7 +16,9 @@ const NAV_LINKS = [
 const scrollTo = (href: string) => {
   const el = document.querySelector(href) as HTMLElement;
   if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - 55;
+  const navbar = document.querySelector('nav');
+  const navHeight = navbar?.offsetHeight || 55;
+  const top = el.getBoundingClientRect().top + window.scrollY - navHeight;
   window.scrollTo({ top, behavior: "smooth" });
 };
 
@@ -117,7 +119,10 @@ const Navbar = () => {
               {NAV_LINKS.map((link) => (
                 <button
                   key={link.href}
-                  onClick={() => { scrollTo(link.href); setOpen(false); }}
+                  onClick={() => { 
+                    setOpen(false);
+                    setTimeout(() => scrollTo(link.href), 300);
+                  }}
                   className="text-left py-2 px-2 text-primary-foreground/90 hover:text-primary-foreground text-base border-b border-primary-foreground/10 last:border-0"
                   style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600 }}
                 >
@@ -125,7 +130,10 @@ const Navbar = () => {
                 </button>
               ))}
               <button
-                onClick={() => { scrollTo("#collaborate"); setOpen(false); }}
+                onClick={() => { 
+                  setOpen(false);
+                  setTimeout(() => scrollTo("#collaborate"), 300);
+                }}
                 className="mt-3 px-5 py-2 rounded-full self-start"
                 style={{
                   background: "rgb(30,28,32)",
