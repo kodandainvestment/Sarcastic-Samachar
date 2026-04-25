@@ -342,7 +342,7 @@ export const ServicesSection = () => {
               <motion.div
                 {...fadeUp(i * 0.1)}
                 className="relative z-10 rounded-3xl p-6 flex flex-col items-center text-center gap-3 group cursor-default overflow-hidden border border-transparent"
-                style={{ background: "rgb(62, 62, 58)", width: "200px", height: "260px" }}
+                style={{ background: "rgb(62, 62, 58)", width: "200px", height: "280px" }}
                 whileHover={{ borderColor: "rgb(249, 198, 50)" }}
                 onMouseEnter={handleCardEnter}
                 onMouseLeave={handleCardLeave}
@@ -354,6 +354,14 @@ export const ServicesSection = () => {
                   {s.title}
                 </p>
                 <p className="text-sm text-white relative z-10 font-body leading-relaxed">{s.desc}</p>
+                <a
+                  href="#collaborate"
+                  onClick={(e) => { e.preventDefault(); const el = document.getElementById('collaborate'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                  className="mt-auto mb-4 px-2 py-1.5 rounded-full text-sm font-semibold flex items-center gap-1 whitespace-nowrap"
+                  style={{ background: "linear-gradient(to right, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))", color: "#363333", fontFamily: "Poppins, sans-serif" }}
+                >
+                  Collab kro <FaRegHandshake />
+                </a>
               </motion.div>
             </div>
           ))}
@@ -389,7 +397,13 @@ export const ServicesSection = () => {
                     const el = document.getElementById('collaborate');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="absolute bottom-3 left-1/2 -translate-x-1/2 px-6 py-0 rounded-full text-sm font-semibold flex items-center gap-1 whitespace-nowrap opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out hover:scale-105 hover:brightness-110 hover:shadow-[0_0_12px_rgba(249,198,50,0.6)] active:scale-95"
+                  className="absolute bottom-3 left-1/2 -translate-x-1/2
+  px-6 py-0 rounded-full text-sm font-semibold
+  flex items-center gap-1 whitespace-nowrap
+  lg:opacity-0 lg:translate-y-4
+  lg:group-hover:opacity-100 lg:group-hover:translate-y-0
+  transition-all duration-300 ease-out
+  hover:scale-105 hover:brightness-110 hover:shadow-[0_0_12px_rgba(249,198,50,0.6)] active:scale-95"
                   style={{ background: "linear-gradient(to right, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))", color: "#363333" }}
                 >
                   Collab kro <FaRegHandshake />
@@ -522,7 +536,14 @@ export const WhyUsSection = () => (
 export const ViralMemesSection = () => {
   const [order, setOrder] = useState([0, 1, 2, 3, 4]);
 
-  const memeImages = [m1, m2, m3, m4, m5];
+  const memeData = [
+    { img: m1, link: "https://www.instagram.com/p/DXLhZZ-DyOZ/?igsh=c2EzbDMzNnk2eG5z" },
+    { img: m2, link: "https://www.instagram.com/p/DXLhZZ-DyOZ/?igsh=c2EzbDMzNnk2eG5z" },
+    { img: m3, link: "https://www.instagram.com/p/DXLhZZ-DyOZ/?igsh=c2EzbDMzNnk2eG5z" },
+    { img: m4, link: "https://www.instagram.com/p/DXLhZZ-DyOZ/?igsh=c2EzbDMzNnk2eG5z" },
+    { img: m5, link: "https://www.instagram.com/p/DXLhZZ-DyOZ/?igsh=c2EzbDMzNnk2eG5z" },
+  ];
+  const memeImages = memeData.map((d) => d.img);
 
   const handleCardClick = (pos: number) => {
     if (pos === 2) return;
@@ -571,14 +592,18 @@ export const ViralMemesSection = () => {
           className="md:hidden flex w-full pt-4 pb-4"
           style={{ overflowX: "auto", flexWrap: "nowrap", gap: "12px", scrollbarWidth: "thin", scrollbarColor: "rgba(252,198,46,0.5) transparent" }}
         >
-          {memeImages.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt="Meme"
-              className="flex-shrink-0 rounded-2xl object-contain cursor-pointer"
-              style={{ width: "200px", boxShadow: i === 2 ? "0 0 0 3px rgb(249,198,50), 0 0 20px rgba(249,198,50,0.4)" : "0 0 0 2px rgb(249,198,50)" }}
-            />
+          {memeData.map((item, i) => (
+            <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 relative group">
+              <img
+                src={item.img}
+                alt="Meme"
+                className="rounded-2xl object-contain"
+                style={{ width: "200px", boxShadow: i === 2 ? "0 0 0 3px rgb(249,198,50), 0 0 20px rgba(249,198,50,0.4)" : "0 0 0 2px rgb(249,198,50)" }}
+              />
+              <div className="absolute inset-0 rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span style={{ color: "rgb(252,198,46)", fontSize: "12px", fontFamily: "Poppins, sans-serif", fontWeight: 600 }}>View on Instagram ↗</span>
+              </div>
+            </a>
           ))}
         </div>
 
@@ -594,28 +619,43 @@ export const ViralMemesSection = () => {
               const zIndexes = [1, 3, 10, 3, 1];
 
               return (
-                <motion.img
+                <div
                   key={cardIndex}
-                  onClick={() => handleCardClick(pos)}
-                  src={memeImages[cardIndex]}
-                  alt="Meme"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  animate={{
-                    x: xOffsets[pos] + stackShiftX,
-                    scale: scales[pos],
-                    opacity: opacities[pos],
-                  }}
-                  transition={{ type: "spring", stiffness: 160, damping: 22 }}
-                  className="rounded-2xl object-contain w-[clamp(160px,28vw,280px)] absolute left-1/2 -translate-x-1/2 cursor-pointer"
-                  style={{
-                    top: "0px",
-                    zIndex: zIndexes[pos],
-                    rotate: "0deg",
-                    boxShadow: isCenter ? "0 0 0 3px rgb(249,198,50), 0 0 40px rgba(249,198,50,0.5)" : "0 0 0 3px rgb(249,198,50)",
-                  }}
-                />
+                  className="absolute left-1/2 -translate-x-1/2 group"
+                  style={{ top: "0px", zIndex: zIndexes[pos] }}
+                >
+                  <motion.img
+                    onClick={() => handleCardClick(pos)}
+                    src={memeImages[cardIndex]}
+                    alt="Meme"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    animate={{
+                      x: xOffsets[pos] + stackShiftX,
+                      scale: scales[pos],
+                      opacity: opacities[pos],
+                    }}
+                    transition={{ type: "spring", stiffness: 160, damping: 22 }}
+                    className="rounded-2xl object-contain w-[clamp(160px,28vw,280px)] cursor-pointer block"
+                    style={{
+                      rotate: "0deg",
+                      boxShadow: isCenter ? "0 0 0 3px rgb(249,198,50), 0 0 40px rgba(249,198,50,0.5)" : "0 0 0 3px rgb(249,198,50)",
+                    }}
+                  />
+                  {isCenter && (
+                    <a
+                      href={memeData[cardIndex].link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute bottom-3 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap"
+                      style={{ background: "rgb(252,198,46)", color: "#1a1a1a", fontFamily: "Poppins, sans-serif", zIndex: 30 }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      View on Instagram ↗
+                    </a>
+                  )}
+                </div>
               );
             })}
           </div>
@@ -932,7 +972,7 @@ export const AboutSection = () => (
           src={section8}
           alt="About character"
           {...fadeUp(0.2)}
-          className="w-auto object-contain pointer-events-none select-none z-10"
+          className="hidden md:block w-auto object-contain pointer-events-none select-none z-10"
           style={{ height: "clamp(280px, 36vw, 460px)", marginTop: "-18px" }}
         />
 

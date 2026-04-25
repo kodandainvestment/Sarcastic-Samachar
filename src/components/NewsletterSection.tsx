@@ -2,21 +2,39 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Instagram, Facebook, Youtube, Mail, MapPin, Phone } from "lucide-react";
 import contact_Ch from "@/assets/contact_Ch.png";
+import emailjs from "@emailjs/browser";
+import { useRef } from "react";
+import { toast } from "sonner";
 
 const socialLinks = [
-   { icon: Instagram, href: "https://www.instagram.com/sarcastic_samachar", label: "Instagram" },
+  { icon: Instagram, href: "https://www.instagram.com/sarcastic_samachar", label: "Instagram" },
   { icon: Facebook, href: "https://www.facebook.com/sarcastic.samachar.k", label: "Facebook" },
   { icon: Youtube, href: "https://www.youtube.com/@Sarcastic_Samachar", label: "YouTube" },
 ];
 
 const contactItems = [
-  { icon: Mail,    text: "social2.sarcasticsamachar@gmail.com" },
-  { icon: MapPin,  text: "Kahin India mein, chai ki dukaan ke pass" },
-  { icon: Phone,   text: "+91 xxxx xxxx (Don't actually call)" },
+  { icon: Mail, text: "social2.sarcasticsamachar@gmail.com" },
+  { icon: MapPin, text: "Kahin India mein, chai ki dukaan ke pass" },
+  { icon: Phone, text: "+91 xxxx xxxx (Don't actually call)" },
 ];
 
 const NewsletterSection = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  const form = useRef<HTMLFormElement>(null);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      "service_douvulj",     // tumhara service ID
+      "template_iz069dk",     // apna template ID
+      form.current,
+      "B7O8K24EapaYM5GPX"
+    ).then(
+      () => toast.success("Message bhej diya! 🎉", { description: "Hum jald hi reply karenge.", duration: 4000 }),
+      () => toast.error("Kuch gadbad ho gayi! 😅", { description: "Thodi der baad try karo.", duration: 4000 })
+    );
+  };
 
   return (
     <section id="collaborate" className="py-16 md:py-24 bg-card/30 border-y border-border">
@@ -42,7 +60,7 @@ const NewsletterSection = () => {
           className="font-display uppercase text-center mb-4 leading-tight"
           style={{ fontSize: "clamp(18px, 2.5vw, 36px)", fontWeight: 500, fontFamily: "Impact, sans-serif", background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
         >
-        Contact Karo
+          Contact Karo
         </h2>
 
         <p className="text-center text-muted-foreground font-body mb-12 text-sm md:text-base">
@@ -81,8 +99,8 @@ const NewsletterSection = () => {
                   </div>
                   <p className="text-gray-300 font-body text-sm whitespace-nowrap">{item.text}</p>
                   <span className="w-6 h-6 rounded-full flex items-center justify-center ml-auto"
-                   style={{background: "rgba(121, 112, 109, 0.15)"}} 
-                   ></span>
+                    style={{ background: "rgba(121, 112, 109, 0.15)" }}
+                  ></span>
                 </div>
               ))}
             </div>
@@ -109,60 +127,14 @@ const NewsletterSection = () => {
           <div className="hidden md:block" />
 
           {/* RIGHT — FORM */}
-          {/* <div
-            className="rounded-2xl p-2 space-y-2  w-full max-w-2xl"
-            style={{
-              background: "rgba(252,198,46,0.07)",
-              borderLeft: "5px solid rgba(252,198,46,0.85)",
-              borderRight: "5px solid rgba(252,198,46,0.85)",
-              borderBottom: "2px solid rgba(252,198,46,0.4)",
-              borderTop: "5px solid rgba(252,198,46,0.85)",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Tumhara naam"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-white outline-none"
-              style={{background: "rgba(192, 188, 187, 0.15)" , border: "none" }}
-            />
-            <input
-              type="email"
-              placeholder="Email address"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-white outline-none"
-              style={ {background: "rgba(192, 188, 187, 0.15)", border: "none" }}
-            />
-            <textarea
-              placeholder="Kya bolna hai bolo..."
-              rows={4}
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="w-full rounded-lg px-4 py-6 text-sm text-foreground placeholder:text-white outline-none resize-none"
-              style={{background: "rgba(192, 188, 187, 0.15)", border: "none" }}
-            />
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              className="w-full font-display text-xl px-4 py-1 rounded-xl text-gray-800"
-              style={{ background: "rgb(252,198,46)", fontFamily: "poppins", fontSize: "clamp(18px, 1.8vw, 14px)", letterSpacing: "0.02em" }}
-            >
-              Bhej Do
-            </motion.button>
-          </div> */}
+          <div className="relative w-full max-w-2xl rounded-2xl">
 
-
-          {/* RIGHT — FORM */}
-<div className="relative w-full max-w-2xl rounded-2xl">
-
-  {/* 🔥 Taper Border (top thick → bottom thin) */}
-  <div
-    className="absolute inset-0 rounded-2xl pointer-events-none"
-    style={{
-      padding: "3px",
-      background: `
+            {/* 🔥 Taper Border (top thick → bottom thin) */}
+            <div
+              className="absolute inset-0 rounded-2xl pointer-events-none"
+              style={{
+                padding: "3px",
+                background: `
         linear-gradient(to bottom, 
           rgba(252,198,46,1) 0%, 
           rgba(252,198,46,0.8) 25%, 
@@ -170,62 +142,62 @@ const NewsletterSection = () => {
           rgba(252,198,46,0.2) 100%
         )
       `,
-      WebkitMask:
-        "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
-      WebkitMaskComposite: "xor",
-      maskComposite: "exclude",
-    }}
-  />
+                WebkitMask:
+                  "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                WebkitMaskComposite: "xor",
+                maskComposite: "exclude",
+              }}
+            />
 
-  {/* ✅ ORIGINAL FORM (unchanged UI) */}
-  <div
-    className="relative rounded-2xl p-3 space-y-2"
-    style={{
-      background: "rgba(252,198,46,0.07)",
-    }}
-  >
-    <input
-      type="text"
-      placeholder="Tumhara naam"
-      value={formData.name}
-      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-      className="w-full rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-white outline-none"
-      style={{ background: "rgba(192, 188, 187, 0.15)", border: "none" }}
-    />
+            {/* ✅ ORIGINAL FORM (unchanged UI) */}
+            <form
+              ref={form}
+              onSubmit={sendEmail}
+              className="relative rounded-2xl p-3 space-y-2"
+              style={{
+                background: "rgba(252,198,46,0.07)",
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Tumhara naam"
+                name="user_name"
+                className="w-full rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-white outline-none"
+                style={{ background: "rgba(192, 188, 187, 0.15)", border: "none" }}
+              />
 
-    <input
-      type="email"
-      placeholder="Email address"
-      value={formData.email}
-      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-      className="w-full rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-white outline-none"
-      style={{ background: "rgba(192, 188, 187, 0.15)", border: "none" }}
-    />
+              <input
+                type="email"
+                placeholder="Email address"
+                name="user_email"
+                className="w-full rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-white outline-none"
+                style={{ background: "rgba(192, 188, 187, 0.15)", border: "none" }}
+              />
 
-    <textarea
-      placeholder="Kya bolna hai bolo..."
-      rows={4}
-      value={formData.message}
-      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-      className="w-full rounded-lg px-4 py-6 text-sm text-foreground placeholder:text-white outline-none resize-none"
-      style={{ background: "rgba(192, 188, 187, 0.15)", border: "none" }}
-    />
+              <textarea
+                placeholder="Kya bolna hai bolo..."
+                rows={4}
+                name="message"
+                className="w-full rounded-lg px-4 py-6 text-sm text-foreground placeholder:text-white outline-none resize-none"
+                style={{ background: "rgba(192, 188, 187, 0.15)", border: "none" }}
+              />
 
-    <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.97 }}
-      className="w-full font-display text-xl px-4 py-1 rounded-xl text-gray-800"
-      style={{
-        background: "rgb(252,198,46)",
-        fontFamily: "poppins",
-        fontSize: "clamp(18px, 1.8vw, 14px)",
-        letterSpacing: "0.02em",
-      }}
-    >
-      Bhej Do
-    </motion.button>
-  </div>
-</div>
+              <motion.button
+                type="submit"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                className="w-full font-display text-xl px-4 py-1 rounded-xl text-gray-800"
+                style={{
+                  background: "rgb(252,198,46)",
+                  fontFamily: "poppins",
+                  fontSize: "clamp(18px, 1.8vw, 14px)",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                Bhej Do
+              </motion.button>
+            </form>
+          </div>
 
         </div>
 
@@ -239,10 +211,10 @@ const NewsletterSection = () => {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            
+
           />
         </div>
- 
+
       </div>
     </section>
   );
