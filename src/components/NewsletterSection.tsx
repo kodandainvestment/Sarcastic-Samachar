@@ -98,15 +98,15 @@ const NewsletterSection = () => {
                     <item.icon size={16} color="rgb(252,198,46)" />
                   </div>
                   <p className="text-gray-300 font-body text-sm whitespace-nowrap">{item.text}</p>
-                  <span className="w-6 h-6 rounded-full flex items-center justify-center ml-auto"
+                  {/* <span className="w-6 h-6 rounded-full flex items-center justify-center ml-auto"
                     style={{ background: "rgba(121, 112, 109, 0.15)" }}
-                  ></span>
+                  ></span> */}
                 </div>
               ))}
             </div>
 
             {/* Social Icons — 4 grey squares */}
-            <div className="flex gap-3">
+            <div className="hidden md:flex gap-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -127,7 +127,7 @@ const NewsletterSection = () => {
           <div className="hidden md:block" />
 
           {/* RIGHT — FORM */}
-          <div className="relative w-full max-w-2xl rounded-2xl">
+          <div className="relative w-full max-w-2xl rounded-2xl mt-6 md:mt-0">
 
             {/* 🔥 Taper Border (top thick → bottom thin) */}
             <div
@@ -202,7 +202,7 @@ const NewsletterSection = () => {
         </div>
 
         {/* Character — sits in the middle column absolutely */}
-        <div className="hidden md:block absolute z-10 pointer-events-none" style={{ bottom: "-100px", left: "calc(55% - 24px)", transform: "translateX(-50%)" }}>
+        <div className="hidden md:block absolute z-10 pointer-events-none" style={{ bottom: "-100px", left: "50%", transform: "translateX(-50%)" }}>
           <motion.img
             src={contact_Ch}
             alt="character"

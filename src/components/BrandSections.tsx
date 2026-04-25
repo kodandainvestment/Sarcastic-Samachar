@@ -128,7 +128,9 @@ export const BrandsSection = () => (
                 className="flex items-center justify-center px-3 py-2.5 rounded-xl text-sm font-body text-primary cursor-default text-center"
                 style={{ border: "1.5px solid rgb(252,198,46)", background: "transparent" }}
               >
-                {tag}
+                {tag === "Manufacture Sector" ? (
+                  <><span className="md:hidden">Manufacture</span><span className="hidden md:inline">Manufacture Sector</span></>
+                ) : tag}
               </motion.span>
             ))}
           </div>
@@ -216,10 +218,10 @@ export const CaseStudiesSection = () => {
                 className="flex-shrink-0 p-4 py-6 flex flex-col justify-between rounded-3xl"
                 style={{
                   width: "240px",
-                  minHeight: "200px",
+                  minHeight: i === 1 ? "250px" : "200px",
                   background: i === 1 ? "linear-gradient(135deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))" : "rgb(38,36,32)",
                   border: i === 1 ? "none" : "2px solid rgba(252,198,46,0.6)",
-                  boxShadow: i === 1 ? "0 20px 40px rgba(0,0,0,0.35), 0 0 25px rgba(249,198,50,0.25)" : "0 10px 25px rgba(0,0,0,0.25)",
+                  boxShadow: "none",
                 }}
               >
                 <div>
@@ -293,6 +295,7 @@ const services: { icon: React.ReactNode; title: string; desc: string }[] = [
 
 export const ServicesSection = () => {
   const [hoveredBtn, setHoveredBtn] = useState<number | null>(null);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
   const handleCardEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     const icon = e.currentTarget.querySelector('.icon-circle') as HTMLElement;
     if (icon) icon.style.color = 'rgb(249,198,50)';
@@ -341,13 +344,11 @@ export const ServicesSection = () => {
               />
               <motion.div
                 {...fadeUp(i * 0.1)}
-                className="relative z-10 rounded-3xl p-6 flex flex-col items-center text-center gap-3 group cursor-default overflow-hidden border border-transparent"
-                style={{ background: "rgb(62, 62, 58)", width: "200px", height: "280px" }}
-                whileHover={{ borderColor: "rgb(249, 198, 50)" }}
-                onMouseEnter={handleCardEnter}
-                onMouseLeave={handleCardLeave}
+                className="relative z-10 rounded-3xl p-6 flex flex-col items-center text-center gap-3 group cursor-pointer overflow-hidden"
+                style={{ background: "rgb(62, 62, 58)", width: "230px", height: "300px", border: activeCard === i ? "2px solid rgb(249,198,50)" : "2px solid transparent", transition: "border-color 0.2s" }}
+                onClick={() => setActiveCard(i)}
               >
-                <div className="relative w-14 h-24 z-10 rounded-full flex items-center justify-center transition-colors duration-300 icon-circle mt-0 text-white" style={{ background: "rgba(23, 23, 21, 0.21)" }}>
+                <div className="relative w-14 h-24 z-10 rounded-full flex items-center justify-center icon-circle mt-0 text-white" style={{ background: "rgba(23, 23, 21, 0.21)" }}>
                   {s.icon}
                 </div>
                 <p className="font-display relative z-10 whitespace-pre-line uppercase tracking-wide leading-snug text-white mb-2" style={{ fontFamily: "Impact, sans-serif", fontWeight: 400, fontSize: "16px" }}>
@@ -491,10 +492,10 @@ export const WhyUsSection = () => (
         }}
       />
 
-      {/* Mobile: centered, no stagger */}
+      {/* Mobile: zig-zag same as desktop */}
       <div className="flex md:hidden flex-col items-center gap-4 max-w-xl mt-16 mx-auto px-4">
         {whyPoints.map((point, i) => (
-          <motion.div key={i} {...fadeUp(i * 0.12)} className="w-full">
+          <motion.div key={i} {...fadeUp(i * 0.12)} className="w-full" style={{ marginLeft: i % 2 !== 0 ? "80px" : "-4px" }}>
             <motion.div
               whileHover={{ y: -10, scale: 1.03 }}
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
@@ -593,14 +594,14 @@ export const ViralMemesSection = () => {
           style={{ overflowX: "auto", flexWrap: "nowrap", gap: "12px", scrollbarWidth: "thin", scrollbarColor: "rgba(252,198,46,0.5) transparent" }}
         >
           {memeData.map((item, i) => (
-            <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 relative group">
+            <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" className="flex-shrink-0 relative group block">
               <img
                 src={item.img}
                 alt="Meme"
-                className="rounded-2xl object-contain"
-                style={{ width: "200px", boxShadow: i === 2 ? "0 0 0 3px rgb(249,198,50), 0 0 20px rgba(249,198,50,0.4)" : "0 0 0 2px rgb(249,198,50)" }}
+                className="rounded-2xl object-cover"
+                style={{ width: "250px", height: "320px", display: "block", boxShadow: i === 2 ? "0 0 0 3px rgb(249,198,50), 0 0 20px rgba(249,198,50,0.4)" : "0 0 0 2px rgb(249,198,50)" }}
               />
-              <div className="absolute inset-0 rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <div className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center" style={{ pointerEvents: "none" }}>
                 <span style={{ color: "rgb(252,198,46)", fontSize: "12px", fontFamily: "Poppins, sans-serif", fontWeight: 600 }}>View on Instagram ↗</span>
               </div>
             </a>
@@ -711,7 +712,7 @@ export const TestimonialsSection = () => {
   const row1 = testimonials.slice(0, 3);
   const row2 = testimonials.slice(3);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
@@ -720,16 +721,16 @@ export const TestimonialsSection = () => {
   const CARD_WIDTH = 220;
   const GAP = 12;
   const totalDistance = row1.length * (CARD_WIDTH + GAP);
-  
-  const xRow1 = useTransform(scrollYProgress, [0, 1], [0, -totalDistance * 0.3]);
-  const xRow2 = useTransform(scrollYProgress, [0, 1], [-totalDistance * 0.3, 0]);
+
+  const xRow1 = useTransform(scrollYProgress, [0, 1], [0, -totalDistance * 1.5]);
+  const xRow2 = useTransform(scrollYProgress, [0, 1], [-totalDistance * 1.5, 0]);
 
   return (
     <section id="testimonials" className="py-24 border-b border-border bg-card/20" ref={containerRef}>
       <div className="container">
         {/* Header */}
         <motion.div
-          className="text-center mb-8"
+          className="text-center mb-8 px-4"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -744,17 +745,13 @@ export const TestimonialsSection = () => {
           </h2>
         </motion.div>
 
-        {/* Mobile: 2-row scroll-animated */}
-        <div className="md:hidden flex flex-col gap-4 overflow-hidden">
-          <motion.div className="flex gap-3" style={{ x: xRow1, flexWrap: "nowrap" }}>
-            {row1.map((t, i) => (
-              <TestimonialCard key={i} t={t} i={i} />
-            ))}
+        {/* Mobile: infinite scroll-driven rows */}
+        <div className="md:hidden flex flex-col gap-4 overflow-hidden" style={{ width: "100vw", marginLeft: "calc(-50vw + 50%)" }}>
+          <motion.div className="flex gap-3 px-2" style={{ x: xRow1 }}>
+            {[...row1, ...row1, ...row1].map((t, i) => <TestimonialCard key={i} t={t} i={i} />)}
           </motion.div>
-          <motion.div className="flex gap-3" style={{ x: xRow2, flexWrap: "nowrap" }}>
-            {row2.map((t, i) => (
-              <TestimonialCard key={i} t={t} i={i} />
-            ))}
+          <motion.div className="flex gap-3 px-2" style={{ x: xRow2 }}>
+            {[...row2, ...row2, ...row2].map((t, i) => <TestimonialCard key={i} t={t} i={i} />)}
           </motion.div>
         </div>
 
@@ -1061,7 +1058,7 @@ export const ProcessSection = () => (
         </motion.div>
 
       </div>
-      <div className="flex flex-wrap justify-center gap-6 md:gap-8 p-0"
+      <div className="grid grid-cols-2 md:flex md:flex-wrap justify-center gap-6 md:gap-8 p-0"
         style={{
           maxWidth: "920px", margin: "0 auto"
 
@@ -1071,7 +1068,7 @@ export const ProcessSection = () => (
           <motion.div
             key={s.title}
             {...fadeUp(i * 0.1)}
-            className="flex flex-col items-center justify-center text-center p-12 process-card relative"
+            className="flex flex-col items-center justify-center text-center p-12 process-card relative w-full md:w-auto"
             style={{
               background: "rgb(50, 50, 46)",
               borderRadius: "18px",

@@ -39,7 +39,7 @@ const HeroSection = () => {
       </div>
 
       {/* Mobile layout: heading → image → tagline+buttons */}
-      <div className="flex flex-col md:hidden z-10 px-6 py-4 text-center flex-1 justify-center">
+      <div className="flex flex-col md:hidden z-10 px-6 py-4 text-center flex-1 justify-center mt-8">
         <motion.h1
           style={{ fontFamily: "'FirstBunny', cursive", fontWeight: 500, fontSize: "clamp(40px, 16vw, 100px)", background: "linear-gradient(90deg, rgb(233,160,35) 0%, rgb(252,198,46) 50%, rgb(233,160,35) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", lineHeight: 0.95 }}
           initial={{ opacity: 0, x: -60 }}

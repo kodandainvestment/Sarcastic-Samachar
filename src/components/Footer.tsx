@@ -21,6 +21,10 @@ const footerLinks = [
       { label: "Process", href: "process" },
     ],
   },
+  {
+    title: "Legal",
+    links: [],
+  },
 ];
 
 const socialLinks = [
@@ -117,7 +121,7 @@ const Footer = () => {
     <>
       <footer className="border-t border-border bg-card/50">
         <div className="container py-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
             {/* Brand */}
             <div className="md:col-span-2 space-y-4">
               <div className="flex items-center gap-3">
@@ -144,24 +148,27 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Links */}
-            {footerLinks.map((group) => (
-              <div key={group.title}>
-                <p className="font-display text-lg text-foreground mb-4 invisible">{group.title}</p>
-                <ul className="space-y-2">
-                  {group.links.map((link) => (
-                    <li key={link.label}>
-                      <button
-                        onClick={() => scrollTo(link.href)}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer"
-                      >
-                        {link.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {/* Links — 3 col on mobile, in grid on desktop */}
+            <div className="grid grid-cols-3 md:contents gap-8">
+              {footerLinks.map((group) => (
+                <div key={group.title}>
+                  <ul className="space-y-2">
+                    {group.title === "Legal" ? (
+                      <>
+                        <li><button onClick={() => setModal("terms")} className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer text-left">Terms & Conditions</button></li>
+                        <li><button onClick={() => setModal("privacy")} className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer text-left">Privacy Policy</button></li>
+                      </>
+                    ) : (
+                      group.links.map((link) => (
+                        <li key={link.label}>
+                          <button onClick={() => scrollTo(link.href)} className="text-sm text-muted-foreground hover:text-primary transition-colors cursor-pointer">{link.label}</button>
+                        </li>
+                      ))
+                    )}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -169,20 +176,6 @@ const Footer = () => {
         <div className="border-t border-border">
           <div className="container py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
             <p>© 2026 Sarcastic Samachar. All rights reserved.</p>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setModal("terms")}
-                className="hover:text-primary transition-colors"
-              >
-                Terms & Conditions
-              </button>
-              <button
-                onClick={() => setModal("privacy")}
-                className="hover:text-primary transition-colors"
-              >
-                Privacy Policy
-              </button>
-            </div>
             <p className="flex items-center gap-1">
               Made with <Heart size={12} className="text-destructive" /> and lots of Meme
             </p>
