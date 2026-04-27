@@ -1,6 +1,8 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { CheckCircle2, Star } from "lucide-react";
+import { FaUsers, FaShareAlt } from "react-icons/fa";
+import { FaRegFaceLaughSquint, FaArrowTrendUp } from "react-icons/fa6";
 import munnaBhaiya from "@/assets/MunnaBhaiya.png";
 import csMunnaBhaiya from "@/assets/CSmunnabhaiya.png";
 import emojiImg from "@/assets/emoji.png";
@@ -23,11 +25,14 @@ import meme_m from "@/assets/service/meme_m.png";
 import Brand_p from "@/assets/service/Brand_p.png";
 import page_s from "@/assets/service/page_s.png";
 import social_m from "@/assets/service/social_m.png";
-import { FaLaughSquint, FaUsers } from "react-icons/fa";
+import { FaLaughSquint } from "react-icons/fa";
 import { MdCampaign } from "react-icons/md";
 import { RiBarChartFill } from "react-icons/ri";
 import { FaRegHandshake } from "react-icons/fa";
-
+// import { FaUsers } from "react-icons/fa";
+// import { FaRegFaceLaughSquint } from "react-icons/fa6";
+// import { FaArrowTrendUp } from "react-icons/fa6";
+// import { FaShareAlt } from "react-icons/fa";
 
 
 const fadeUp = (delay = 0) => ({
@@ -51,7 +56,7 @@ const SectionTitle = ({ quote, speaker, sub }: { quote: string; speaker: string;
 
 /* ─── 3. BRANDS ─────────────────────────────────────────────── */
 export const BrandsSection = () => (
-  <section id="brands" className="py-20 border-b border-border overflow-hidden relative">
+  <section id="brands" className="py-16 md:py-20 border-b border-border overflow-hidden relative">
     <div className="container relative">
 
       {/* Header */}
@@ -116,7 +121,7 @@ export const BrandsSection = () => (
           </p>
 
           {/* Industry tags — 3 col grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 px-4 sm:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 px-2 sm:px-8">
             {["FMCG", "Ed Tech", "Fashion", "Manufacture Sector", "D2C Brands", "Startups"].map((tag, i) => (
               <motion.span
                 key={tag}
@@ -177,7 +182,7 @@ export const CaseStudiesSection = () => {
   };
 
   return (
-    <section id="case-studies" className="py-20 border-b border-border bg-card/20 overflow-hidden">
+    <section id="case-studies" className="py-16 md:py-20 border-b border-border bg-card/20 overflow-hidden">
       <div className="container relative">
         <div className="flex flex-col items-center">
           <motion.div {...fadeUp()} className="text-center mb-6">
@@ -266,7 +271,7 @@ export const CaseStudiesSection = () => {
                 >
                   <div>
                     <div className="flex items-center justify-between mb-3 gap-2">
-                      <span className="font-display text-2xl uppercase" style={isCenter ? { color: "#1a1a1a", fontWeight: 400, fontFamily: "Impact, sans-serif" } : { background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontWeight: 400, fontFamily: "Impact, sans-serif" }}>{c.brand}</span>
+                      <span className="font-display text-2xl uppercase whitespace-nowrap" style={isCenter ? { color: "#1a1a1a", fontWeight: 400, fontFamily: "Impact, sans-serif" } : { background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontWeight: 400, fontFamily: "Impact, sans-serif" }}>{c.brand}</span>
                       <span className="rounded-full text-xs font-body" style={{ width: "150px", height: "28px", display: "inline-flex", alignItems: "center", justifyContent: "center", borderRadius: "999px", whiteSpace: "nowrap", border: "1.5px solid rgba(255,255,255,0.8)", color: isCenter ? "#1a1a1a" : "rgba(252,198,46,0.9)", fontFamily: "Poppins, sans-serif", fontSize: "11px", transition: "all 0.3s ease" }}>{c.category}</span>
                     </div>
                     <p className="font-body text-sm leading-relaxed" style={isCenter ? { color: "#1a1a1a", fontFamily: "Poppins, sans-serif", fontWeight: 300 } : { color: "rgba(252,198,46,0.85)", fontFamily: "Poppins, sans-serif", fontWeight: 300 }}>{c.desc}</p>
@@ -305,7 +310,7 @@ export const ServicesSection = () => {
     if (icon) icon.style.color = 'white';
   };
   return (
-    <section id="services" className="py-24 border-b border-border">
+    <section id="services" className="py-16 md:py-24 border-b border-border">
       <div className="container">
         {/* <motion.div {...fadeUp()}>
         <SectionTitle
@@ -333,8 +338,8 @@ export const ServicesSection = () => {
 
         {/* Mobile: horizontal scroll */}
         <div
-          className="lg:hidden flex pt-8 pb-4"
-          style={{ overflowX: "auto", flexWrap: "nowrap", gap: "24px", scrollbarWidth: "thin", scrollbarColor: "rgba(252,198,46,0.5) transparent" }}
+          className="lg:hidden flex pt-8"
+          style={{ overflowX: "auto", overflowY: "hidden", flexWrap: "nowrap", gap: "24px", scrollbarWidth: "none" }}
         >
           {services.map((s, i) => (
             <div key={s.title} className="relative flex-shrink-0" style={{ paddingLeft: "8px" }}>
@@ -343,26 +348,46 @@ export const ServicesSection = () => {
                 style={{ background: "rgba(249,198,50,0.9)", width: "10px", left: "3px", top: "28px", height: "80px", zIndex: 5 }}
               />
               <motion.div
-                {...fadeUp(i * 0.1)}
-                className="relative z-10 rounded-3xl p-6 flex flex-col items-center text-center gap-3 group cursor-pointer overflow-hidden"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="relative z-10 rounded-3xl p-6 flex flex-col items-center text-center cursor-pointer overflow-hidden"
                 style={{ background: "rgb(62, 62, 58)", width: "230px", height: "300px", border: activeCard === i ? "2px solid rgb(249,198,50)" : "2px solid transparent", transition: "border-color 0.2s" }}
-                onClick={() => setActiveCard(i)}
+                onClick={() => setActiveCard(i === activeCard ? null : i)}
               >
-                <div className="relative w-14 h-24 z-10 rounded-full flex items-center justify-center icon-circle mt-0 text-white" style={{ background: "rgba(23, 23, 21, 0.21)" }}>
+                {/* Icon circle — fixed square dimensions so it stays circular */}
+                <div
+                  className="flex-shrink-0 flex items-center justify-center rounded-full mb-3"
+                  style={{
+                    width: "56px", height: "56px",
+                    background: "rgba(23,23,21,0.5)",
+                    color: activeCard === i ? "rgb(249,198,50)" : "white",
+                    transition: "color 0.2s",
+                  }}
+                >
                   {s.icon}
                 </div>
-                <p className="font-display relative z-10 whitespace-pre-line uppercase tracking-wide leading-snug text-white mb-2" style={{ fontFamily: "Impact, sans-serif", fontWeight: 400, fontSize: "16px" }}>
+                <p className="font-display relative z-10 whitespace-pre-line uppercase tracking-wide leading-snug mb-2"
+                  style={{ fontFamily: "Impact, sans-serif", fontWeight: 400, fontSize: "16px", color: activeCard === i ? "rgb(249,198,50)" : "white", transition: "color 0.2s" }}
+                >
                   {s.title}
                 </p>
-                <p className="text-sm text-white relative z-10 font-body leading-relaxed">{s.desc}</p>
-                <a
+                <p className="text-sm relative z-10 font-body leading-relaxed flex-1"
+                  style={{ color: activeCard === i ? "rgb(249,198,50)" : "white", transition: "color 0.2s" }}
+                >{s.desc}</p>
+                <motion.a
                   href="#collaborate"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 + 0.3 }}
                   onClick={(e) => { e.preventDefault(); const el = document.getElementById('collaborate'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
-                  className="mt-auto mb-4 px-2 py-1.5 rounded-full text-sm font-semibold flex items-center gap-1 whitespace-nowrap"
+                  className="w-4/5 py-2 rounded-full text-sm font-semibold flex items-center justify-center gap-1 flex-shrink-0"
                   style={{ background: "linear-gradient(to right, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))", color: "#363333", fontFamily: "Poppins, sans-serif" }}
                 >
                   Collab kro <FaRegHandshake />
-                </a>
+                </motion.a>
               </motion.div>
             </div>
           ))}
@@ -428,14 +453,14 @@ export const ServicesSection = () => {
 
 /* ─── 6. WHY CHOOSE US ───────────────────────────────────────── */
 const whyPoints = [
-  "Audience ko samajhte hain (kyunki hum bhi wahi hain)",
-  "Relatable content > cringe ads",
-  "Trend pakadte hain, late nahi hote",
-  "Memes jo skip nahi, share hote hain",
+  { icon: FaUsers, text: "Audience ko samajhte hain (kyunki hum bhi wahi hain)" },
+  { icon: FaRegFaceLaughSquint, text: "Relatable content > cringe ads" },
+  { icon: FaArrowTrendUp, text: "Trend pakadte hain, late nahi hote" },
+  { icon: FaShareAlt, text: "Memes jo skip nahi, share hote hain" },
 ];
 
 export const WhyUsSection = () => (
-  <section id="why-us" className="py-24 pb-32 border-b border-border text-white bg-card/20">
+  <section id="why-us" className="py-16 md:py-24 pb-16 md:pb-32 border-b border-border text-white bg-card/20">
     <div className="container relative">
       {/* <motion.div {...fadeUp()}>
         <SectionTitle
@@ -492,18 +517,17 @@ export const WhyUsSection = () => (
         }}
       />
 
-      {/* Mobile: zig-zag same as desktop */}
-      <div className="flex md:hidden flex-col items-center gap-4 max-w-xl mt-16 mx-auto px-4">
+      {/* Mobile: icon + text list */}
+      <div className="flex md:hidden flex-col gap-3 mt-6 mx-auto px-4 max-w-sm">
         {whyPoints.map((point, i) => (
-          <motion.div key={i} {...fadeUp(i * 0.12)} className="w-full" style={{ marginLeft: i % 2 !== 0 ? "80px" : "-4px" }}>
-            <motion.div
-              whileHover={{ y: -10, scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 200, damping: 15 }}
-              className="px-5 py-4 rounded-2xl font-body text-base text-white/90"
-              style={{ background: "rgba(255,255,255,0.05)", border: "2px solid rgba(249,198,50,0.7)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
-            >
-              {point}
-            </motion.div>
+          <motion.div key={i} {...fadeUp(i * 0.12)}
+            className="flex items-center gap-3 px-4 py-3 rounded-2xl"
+            style={{ background: "rgba(255,255,255,0.05)", border: "2px solid rgba(249,198,50,0.7)" }}
+          >
+            <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "rgb(249,198,50)" }}>
+              <point.icon size={18} color="#1a1a1a" />
+            </div>
+            <p className="font-body text-white/90 text-sm leading-snug">{point.text}</p>
           </motion.div>
         ))}
       </div>
@@ -518,12 +542,15 @@ export const WhyUsSection = () => (
             style={{ marginLeft: i % 2 !== 0 ? `${(i + 1) * 40}px` : "0px" }}
           >
             <motion.div
-              whileHover={{ y: -10, scale: 1.03 }}
+              whileHover={{ y: -6, scale: 1.02 }}
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
-              className="flex-1 px-5 py-4 rounded-2xl font-body text-base text-white/90"
+              className="flex-1 flex items-center gap-3 px-5 py-3 rounded-2xl font-body text-sm text-white/90"
               style={{ background: "rgba(255,255,255,0.05)", border: "2px solid rgba(249,198,50,0.7)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
             >
-              {point}
+              <div className="flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center" style={{ background: "rgb(249,198,50)" }}>
+                <point.icon size={16} color="#1a1a1a" />
+              </div>
+              {point.text}
             </motion.div>
           </motion.div>
         ))}
@@ -559,7 +586,7 @@ export const ViralMemesSection = () => {
   };
 
   return (
-    <section id="memes" className="py-24 border-b border-border">
+    <section id="memes" className="py-16 md:py-24 border-b border-border">
       <div className="container">
         <div className="mb-16">
           {/* <motion.div {...fadeUp()}>
@@ -709,24 +736,23 @@ const TestimonialCard = ({ t, i }: { t: typeof testimonials[0]; i: number }) => 
 );
 
 export const TestimonialsSection = () => {
-  const row1 = testimonials.slice(0, 3);
-  const row2 = testimonials.slice(3);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const CARD_WIDTH = 220;
-  const GAP = 12;
-  const totalDistance = row1.length * (CARD_WIDTH + GAP);
-
-  const xRow1 = useTransform(scrollYProgress, [0, 1], [0, -totalDistance * 1.5]);
-  const xRow2 = useTransform(scrollYProgress, [0, 1], [-totalDistance * 1.5, 0]);
+  const repeated = [...testimonials, ...testimonials, ...testimonials];
 
   return (
-    <section id="testimonials" className="py-24 border-b border-border bg-card/20" ref={containerRef}>
+    <section id="testimonials" className="py-16 md:py-24 border-b border-border bg-card/20">
+      <style>{`
+        @keyframes marquee-left {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-33.333%); }
+        }
+        @keyframes marquee-right {
+          0%   { transform: translateX(-33.333%); }
+          100% { transform: translateX(0); }
+        }
+        .marquee-left  { animation: marquee-left  25s linear infinite; }
+        .marquee-right { animation: marquee-right 25s linear infinite; }
+      `}</style>
+
       <div className="container">
         {/* Header */}
         <motion.div
@@ -745,14 +771,18 @@ export const TestimonialsSection = () => {
           </h2>
         </motion.div>
 
-        {/* Mobile: infinite scroll-driven rows */}
+        {/* Mobile: two auto-scrolling rows in opposite directions */}
         <div className="md:hidden flex flex-col gap-4 overflow-hidden" style={{ width: "100vw", marginLeft: "calc(-50vw + 50%)" }}>
-          <motion.div className="flex gap-3 px-2" style={{ x: xRow1 }}>
-            {[...row1, ...row1, ...row1].map((t, i) => <TestimonialCard key={i} t={t} i={i} />)}
-          </motion.div>
-          <motion.div className="flex gap-3 px-2" style={{ x: xRow2 }}>
-            {[...row2, ...row2, ...row2].map((t, i) => <TestimonialCard key={i} t={t} i={i} />)}
-          </motion.div>
+          <div className="overflow-hidden">
+            <div className="marquee-left flex gap-3" style={{ width: "max-content" }}>
+              {repeated.map((t, i) => <TestimonialCard key={i} t={t} i={i} />)}
+            </div>
+          </div>
+          <div className="overflow-hidden">
+            <div className="marquee-right flex gap-3" style={{ width: "max-content" }}>
+              {repeated.map((t, i) => <TestimonialCard key={i} t={t} i={i} />)}
+            </div>
+          </div>
         </div>
 
         {/* Desktop: grid */}
@@ -783,7 +813,7 @@ const audienceStats = [
 
 
 export const AudienceSection = () => (
-  <section id="audience" className="py-20 border-b border-border">
+  <section id="audience" className="py-16 md:py-20 border-b border-border">
     <div className="container">
 
       {/* 
@@ -837,72 +867,55 @@ export const AudienceSection = () => (
         </div>
 
 
-        {/* CARDS */}
-        <div className="flex flex-col gap-6 items-center md:items-start md:-ml-24">
+        {/* CARDS — mobile: 2x2 grid filling container; desktop: two flex rows */}
+        <div className="md:hidden grid grid-cols-2 gap-4 w-full px-4 mt-6">
+          {audienceStats.map((a, i) => (
+            <motion.div
+              key={a.label}
+              {...fadeUp(i * 0.1)}
+              className="rounded-2xl aspect-square flex flex-col justify-center items-center text-center"
+              style={{ border: "2px solid rgba(252,198,46,0.85)" }}
+            >
+              <p style={{ fontSize: "clamp(22px, 7vw, 36px)", fontWeight: 500, fontFamily: "Impact, sans-serif", background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                {i === 0 ? (<><span style={{ fontSize: "0.58em", marginRight: "6px" }}>IN</span>PAN</>) : a.value}
+              </p>
+              <p className="text-sm text-white/90 pt-2">{a.label}</p>
+            </motion.div>
+          ))}
+        </div>
 
-          {/* 🔹 Row 1 */}
+        {/* Desktop: two flex rows */}
+        <div className="hidden md:flex flex-col gap-6 items-start md:-ml-24">
           <div className="flex gap-4">
             {audienceStats.slice(0, 2).map((a, i) => (
               <motion.div
                 key={a.label}
                 {...fadeUp(i * 0.1)}
-                className="rounded-2xl w-36 h-28 sm:w-44 sm:h-36 border border-border bg-card/60 
-        flex flex-col justify-center items-center text-center
-        hover:border-primary/30 transition-colors"
-                style={{
-
-                  border: "2px solid rgba(252,198,46,0.85)",
-                }}
+                className="rounded-2xl w-44 h-36 flex flex-col justify-center items-center text-center"
+                style={{ border: "2px solid rgba(252,198,46,0.85)" }}
               >
-                {/* <p className="text-4xl">{a.icon}</p> */}
-                <p className="text-2xl text-gradient-gold "
-                  style={{ fontSize: "clamp(18px, 2.5vw, 36px)", fontWeight: 500, fontFamily: "Impact, sans-serif", background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-                >
-
-                  {i === 0 ? (
-                    <>
-                      <span style={{ fontSize: "0.58em", marginRight: "6px" }}>IN</span>
-                      {a.value}
-                    </>
-                  ) : (
-                    a.value
-                  )}
+                <p style={{ fontSize: "clamp(18px, 2.5vw, 36px)", fontWeight: 500, fontFamily: "Impact, sans-serif", background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                  {i === 0 ? (<><span style={{ fontSize: "0.58em", marginRight: "6px" }}>IN</span>{a.value}</>) : a.value}
                 </p>
-                <p className="text-sm text-white/90 pt-2">
-                  {a.label}
-                </p>
+                <p className="text-sm text-white/90 pt-2">{a.label}</p>
               </motion.div>
             ))}
           </div>
-
-          {/* 🔹 Row 2 */}
           <div className="flex gap-4">
             {audienceStats.slice(2, 4).map((a, i) => (
               <motion.div
                 key={a.label}
                 {...fadeUp(i * 0.1)}
-                className="rounded-2xl w-36 h-28 sm:w-44 sm:h-36 border border-border bg-card/60 
-        flex flex-col justify-center items-center text-center
-        hover:border-primary/30 transition-colors"
-                style={{
-
-                  border: "2px solid rgba(252,198,46,0.85)",
-                }}
+                className="rounded-2xl w-44 h-36 flex flex-col justify-center items-center text-center"
+                style={{ border: "2px solid rgba(252,198,46,0.85)" }}
               >
-                {/* <p className="text-4xl">{a.icon}</p> */}
-                <p className="text-2xl text-gradient-gold "
-                  style={{ fontSize: "clamp(18px, 2.5vw, 36px)", fontWeight: 500, fontFamily: "Impact, sans-serif", background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-                >
-
+                <p style={{ fontSize: "clamp(18px, 2.5vw, 36px)", fontWeight: 500, fontFamily: "Impact, sans-serif", background: "linear-gradient(90deg, rgb(233,160,35), rgb(252,198,46), rgb(233,160,35))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                   {a.value}
                 </p>
-                <p className="text-sm text-white/90 pt-1 ">
-                  {a.label}
-                </p>
+                <p className="text-sm text-white/90 pt-1">{a.label}</p>
               </motion.div>
             ))}
           </div>
-
         </div>
 
       </div>
@@ -912,7 +925,7 @@ export const AudienceSection = () => (
 
 /* ─── 10. ABOUT / STORY ──────────────────────────────────────── */
 export const AboutSection = () => (
-  <section id="about" className="py-20 border-b border-border bg-card/20">
+  <section id="about" className="py-16 md:py-20 border-b border-border bg-card/20">
     <div className="container">
       {/* <motion.div {...fadeUp()}>
         <SectionTitle
@@ -1018,7 +1031,7 @@ const steps = [
 const iconGradStyle = {};
 
 export const ProcessSection = () => (
-  <section id="process" className="py-24 border-b border-border overflow-hidden">
+  <section id="process" className="py-16 md:py-24 border-b border-border overflow-hidden">
     <div className="container">
       <svg width="0" height="0" style={{ position: "absolute" }}>
         <defs>
@@ -1058,26 +1071,35 @@ export const ProcessSection = () => (
         </motion.div>
 
       </div>
-      <div className="grid grid-cols-2 md:flex md:flex-wrap justify-center gap-6 md:gap-8 p-0"
-        style={{
-          maxWidth: "920px", margin: "0 auto"
-
-        }}>
-
+      {/* Mobile: 2x2 centered square grid */}
+      <div className="md:hidden grid grid-cols-2 gap-3 w-full px-3 mx-auto" style={{ maxWidth: "400px" }}>
         {steps.map((s, i) => (
           <motion.div
             key={s.title}
             {...fadeUp(i * 0.1)}
-            className="flex flex-col items-center justify-center text-center p-12 process-card relative w-full md:w-auto"
-            style={{
-              background: "rgb(50, 50, 46)",
-              borderRadius: "18px",
-              width: "160px",
-              height: "160px",
-              padding: "14px 10px",
-              boxShadow: "0 4px 18px rgba(0,0,0,0.35)",
-              position: "relative",
-            }}
+            className="flex flex-col items-center justify-center text-center relative aspect-square"
+            style={{ background: "rgb(50,50,46)", borderRadius: "18px", padding: "12px 6px", boxShadow: "0 4px 18px rgba(0,0,0,0.35)" }}
+          >
+            <span style={{ position:"absolute", top:0, left:18, width:"calc(50% - 18px)", height:"2px", background:"linear-gradient(to right, rgb(200,155,40) 0%, transparent 100%)" }} />
+            <span style={{ position:"absolute", top:18, left:0, width:"2px", height:"calc(50% - 18px)", background:"linear-gradient(to bottom, rgb(200,155,40) 0%, transparent 100%)" }} />
+            <span style={{ position:"absolute", top:0, left:0, width:"18px", height:"18px", borderTop:"2px solid rgb(200,155,40)", borderLeft:"2px solid rgb(200,155,40)", borderTopLeftRadius:"18px" }} />
+            <span style={{ position:"absolute", bottom:0, right:18, width:"calc(50% - 18px)", height:"2px", background:"linear-gradient(to left, rgb(200,155,40) 0%, transparent 100%)" }} />
+            <span style={{ position:"absolute", bottom:18, right:0, width:"2px", height:"calc(50% - 18px)", background:"linear-gradient(to top, rgb(200,155,40) 0%, transparent 100%)" }} />
+            <span style={{ position:"absolute", bottom:0, right:0, width:"18px", height:"18px", borderBottom:"2px solid rgb(200,155,40)", borderRight:"2px solid rgb(200,155,40)", borderBottomRightRadius:"18px" }} />
+            <img src={s.icon} alt={s.title} className="w-[45px] h-[45px] mx-auto object-contain mb-1 relative z-10" />
+            <p className="font-body text-[rgb(252,198,46)] whitespace-normal relative z-10" style={{ whiteSpace:"pre-line", lineHeight:1.2, fontSize:"11px", fontFamily:"Poppins, sans-serif", fontWeight:200 }}>{s.title}</p>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Desktop: flex row */}
+      <div className="hidden md:flex flex-wrap justify-center gap-8" style={{ maxWidth:"920px", margin:"0 auto" }}>
+        {steps.map((s, i) => (
+          <motion.div
+            key={s.title}
+            {...fadeUp(i * 0.1)}
+            className="flex flex-col items-center justify-center text-center process-card relative"
+            style={{ background:"rgb(50,50,46)", borderRadius:"18px", width:"160px", height:"160px", padding:"14px 10px", boxShadow:"0 4px 18px rgba(0,0,0,0.35)", position:"relative" }}
           >
             {/* Top-left: horizontal fade */}
             <span style={{ position:"absolute", top:0, left:18, width:"calc(50% - 18px)", height:"2px", background:"linear-gradient(to right, rgb(200,155,40) 0%, transparent 100%)" }} />

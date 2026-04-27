@@ -63,18 +63,18 @@ const NewsletterSection = () => {
           Contact Karo
         </h2>
 
-        <p className="text-center text-muted-foreground font-body mb-12 text-sm md:text-base">
+        <p className="text-center text-muted-foreground font-body mb-4 md:mb-12 text-sm md:text-base">
           <span className="text-base uppercase tracking-widest font-body" style={{ color: "#ffffff" }}>Manoj Bajoayee</span>{" — "}
           <span className="text-primary font-semibold">
             Ae gadi start kar contact karna hai
           </span>
         </p>
 
-        {/* Main Grid — 3 cols: left | character gap | right */}
-        <div className="grid grid-cols-1 md:grid-cols-[0.8fr_180px_1.3fr] gap-4 items-start relative md:pl-10">
+        {/* Main Grid — 3 cols: left | center character | right form */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_190px_1fr] gap-4 items-start relative">
 
-          {/* LEFT */}
-          <div className="space-y-6 md:pr-4">
+          {/* LEFT — hidden on mobile, shown on desktop */}
+          <div className="hidden md:block space-y-6 md:pr-4">
             <p className="text-white font-body text-sm leading-relaxed">
               Koi complaint hai? Meme idea hai? Ya bas hello bolna hai?
               Likh do, hum padh lenge (probably).
@@ -86,27 +86,21 @@ const NewsletterSection = () => {
                 <div
                   key={i}
                   className="flex items-center gap-3 px-2 py-1.5 rounded-xl"
-                  style={{
-                    background: "rgba(252,198,46,0.08)",
-                    // border: "1px solid rgba(252,198,46,0.3)",
-                  }}
+                  style={{ background: "rgba(252,198,46,0.08)" }}
                 >
                   <div
                     className="w-9 h-9 rounded flex-shrink-0 flex items-center justify-center"
-                    style={{ background: "rgba(126, 122, 121, 0.15)", border: "1.2px solid rgba(252,198,46,0.7)" }}
+                    style={{ background: "rgba(126,122,121,0.15)", border: "1.2px solid rgba(252,198,46,0.7)" }}
                   >
                     <item.icon size={16} color="rgb(252,198,46)" />
                   </div>
-                  <p className="text-gray-300 font-body text-sm whitespace-nowrap">{item.text}</p>
-                  {/* <span className="w-6 h-6 rounded-full flex items-center justify-center ml-auto"
-                    style={{ background: "rgba(121, 112, 109, 0.15)" }}
-                  ></span> */}
+                  <p className="text-gray-300 font-body text-sm break-all">{item.text}</p>
                 </div>
               ))}
             </div>
 
-            {/* Social Icons — 4 grey squares */}
-            <div className="hidden md:flex gap-3">
+            {/* Social Icons */}
+            <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -126,8 +120,14 @@ const NewsletterSection = () => {
           {/* CENTER — character slot (empty, character is absolute) */}
           <div className="hidden md:block" />
 
+          {/* Mobile paragraph above form */}
+          <p className="md:hidden text-white font-body text-sm leading-relaxed mb-2 px-1">
+            Koi complaint hai? Meme idea hai? Ya bas hello bolna hai?
+            Likh do, hum padh lenge (probably).
+          </p>
+
           {/* RIGHT — FORM */}
-          <div className="relative w-full max-w-2xl rounded-2xl mt-6 md:mt-0">
+          <div className="relative w-full md:max-w-sm md:ml-auto rounded-2xl mt-0 md:mt-0">
 
             {/* 🔥 Taper Border (top thick → bottom thin) */}
             <div
@@ -176,9 +176,9 @@ const NewsletterSection = () => {
 
               <textarea
                 placeholder="Kya bolna hai bolo..."
-                rows={4}
+                rows={6}
                 name="message"
-                className="w-full rounded-lg px-4 py-6 text-sm text-foreground placeholder:text-white outline-none resize-none"
+                className="w-full rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-white outline-none resize-none"
                 style={{ background: "rgba(192, 188, 187, 0.15)", border: "none" }}
               />
 
@@ -201,8 +201,27 @@ const NewsletterSection = () => {
 
         </div>
 
-        {/* Character — sits in the middle column absolutely */}
-        <div className="hidden md:block absolute z-10 pointer-events-none" style={{ bottom: "-100px", left: "50%", transform: "translateX(-50%)" }}>
+        {/* Mobile-only: paragraph above form is handled via order, contact items below form */}
+        <div className="md:hidden mt-6 space-y-3 px-1">
+          {contactItems.map((item, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-3 px-2 py-1.5 rounded-xl"
+              style={{ background: "rgba(252,198,46,0.08)" }}
+            >
+              <div
+                className="w-9 h-9 rounded flex-shrink-0 flex items-center justify-center"
+                style={{ background: "rgba(126,122,121,0.15)", border: "1.2px solid rgba(252,198,46,0.7)" }}
+              >
+                <item.icon size={16} color="rgb(252,198,46)" />
+              </div>
+              <p className="text-gray-300 font-body text-sm break-all leading-snug">{item.text}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Character — centered in middle column */}
+        <div className="hidden md:block absolute z-10 pointer-events-none" style={{ bottom: "-95px", left: "50%", transform: "translateX(-50%)" }}>
           <motion.img
             src={contact_Ch}
             alt="character"

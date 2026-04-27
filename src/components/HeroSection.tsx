@@ -41,7 +41,7 @@ const HeroSection = () => {
       {/* Mobile layout: heading → image → tagline+buttons */}
       <div className="flex flex-col md:hidden z-10 px-6 py-4 text-center flex-1 justify-center mt-8">
         <motion.h1
-          style={{ fontFamily: "'FirstBunny', cursive", fontWeight: 500, fontSize: "clamp(40px, 16vw, 100px)", background: "linear-gradient(90deg, rgb(233,160,35) 0%, rgb(252,198,46) 50%, rgb(233,160,35) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", lineHeight: 0.95 }}
+          style={{ fontFamily: "'FirstBunny', cursive", fontWeight: 500, fontSize: "clamp(40px, 14vw, 100px)", background: "linear-gradient(90deg, rgb(233,160,35) 0%, rgb(252,198,46) 50%, rgb(233,160,35) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", lineHeight: 0.95 }}
           initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
@@ -60,7 +60,7 @@ const HeroSection = () => {
           />
         </div>
 
-        <div className="flex flex-col gap-6 pt-12">
+        <div className="flex flex-col gap-6 pt-8">
           <div style={{ height: "80px", overflow: "hidden" }}>
             <AnimatePresence mode="wait">
               <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.4 }}>
