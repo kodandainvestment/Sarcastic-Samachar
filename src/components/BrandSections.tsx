@@ -166,19 +166,17 @@ const cases = [
 ];
 
 export const CaseStudiesSection = () => {
-  const [order, setOrder] = useState([0, 1, 2]);
+  const [center, setCenter] = useState(1);
+  const total = cases.length;
+
+  const getIndex = (offset: number) => (center + offset + total) % total;
+  // pos 0 = left, pos 1 = center, pos 2 = right
+  const order = [getIndex(-1), center, getIndex(1)];
 
   const handleClick = (pos: number) => {
     if (pos === 1) return;
-    setOrder(prev => {
-      if (pos === 0) {
-        // left card clicked → bring it to center: [A,B,C] → [C,A,B]
-        return [prev[2], prev[0], prev[1]];
-      } else {
-        // right card clicked → bring it to center: [A,B,C] → [B,C,A]
-        return [prev[1], prev[2], prev[0]];
-      }
-    });
+    if (pos === 0) setCenter(prev => (prev - 1 + total) % total);
+    else setCenter(prev => (prev + 1) % total);
   };
 
   return (
@@ -394,25 +392,25 @@ export const ServicesSection = () => {
         </div>
 
         {/* Desktop: grid */}
-        <div className="hidden lg:grid lg:grid-cols-4 pt-8 gap-8 mb-10" style={{ maxWidth: "950px", margin: "0 auto 40px" }}>
+        <div className="hidden lg:grid lg:grid-cols-4 pt-8 gap-8 mb-10" style={{ maxWidth: "1000px", margin: "0 auto 40px" }}>
           {services.map((s, i) => (
             <div key={s.title} className="relative flex justify-center">
               <div
                 className="absolute top-7 bottom-40 rounded-full"
-                style={{ background: "rgba(249,198,50,0.9)", width: "10px", left: "-5px", zIndex: 5 }}
+                style={{ background: "rgba(249,198,50,0.9)", width: "10px", left: "-4px", zIndex: 5 }}
               />
               <motion.div
                 {...fadeUp(i * 0.1)}
-                className="relative z-10 rounded-3xl p-6 flex flex-col items-center text-center w-full max-w-[220px] h-[260px] gap-3 group cursor-default overflow-hidden min-h-[200px] border border-transparent hover:border-1 transition-all duration-0"
+                className="relative z-10 rounded-3xl p-6 flex flex-col items-center text-center w-full max-w-[220px] h-[270px] gap-1 group cursor-default overflow-hidden min-h-[200px] border border-transparent hover:border-1 transition-all duration-0"
                 style={{ background: "rgb(62, 62, 58)" }}
                 whileHover={{ borderColor: "rgb(249, 198, 50)" }}
                 onMouseEnter={handleCardEnter}
                 onMouseLeave={handleCardLeave}
               >
-                <div className="relative w-14 h-24 z-10 rounded-full flex items-center justify-center transition-colors duration-300 icon-circle mt-0 text-white group-hover:text-[rgb(249,198,50)]" style={{ background: "rgba(23, 23, 21, 0.21)" }}>
+                <div className="relative w-14 h-14 z-10 rounded-full flex items-center justify-center transition-colors duration-300 icon-circle mt-0 text-white group-hover:text-[rgb(249,198,50)]" style={{ background: "rgba(23, 23, 21, 0.21)" }}>
                   {s.icon}
                 </div>
-                <p className="font-display relative z-10 whitespace-pre-line uppercase tracking-wide leading-snug transition-colors duration-300 group-hover:text-[rgb(249,198,50)] text-white mb-2" style={{ fontFamily: "Impact, sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.2vw, 18px)" }}>
+                <p className="font-display relative z-10 whitespace-pre-line uppercase tracking-wide leading-snug transition-colors duration-300 group-hover:text-[rgb(249,198,50)] text-white mb-1" style={{ fontFamily: "Impact, sans-serif", fontWeight: 400, fontSize: "clamp(14px, 1.2vw, 18px)" }}>
                   {s.title}
                 </p>
                 <p className="text-sm text-white relative z-10 font-body mb-4 leading-relaxed transition-colors duration-300 group-hover:text-[rgb(249,198,50)] text-white">
@@ -423,8 +421,8 @@ export const ServicesSection = () => {
                     const el = document.getElementById('collaborate');
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="absolute bottom-3 left-1/2 -translate-x-1/2
-  px-6 py-0 rounded-full text-sm font-semibold
+                  className="absolute bottom-5 left-1/2 -translate-x-1/2
+  px-4 py-1 rounded-full text-sm font-semibold
   flex items-center gap-1 whitespace-nowrap
   lg:opacity-0 lg:translate-y-4
   lg:group-hover:opacity-100 lg:group-hover:translate-y-0
@@ -785,13 +783,18 @@ export const TestimonialsSection = () => {
           </div>
         </div>
 
-        {/* Desktop: grid */}
-        <div className="hidden md:grid grid-cols-3 gap-8 items-stretch justify-items-center max-w-4xl mx-auto">
-          {testimonials.map((t, i) => (
-            <motion.div key={i} {...fadeUp(i * 0.08)}>
-              <TestimonialCard t={t} i={i} />
-            </motion.div>
-          ))}
+        {/* Desktop: two auto-scrolling rows */}
+        <div className="hidden md:flex flex-col gap-8 overflow-hidden" style={{ width: "100vw", marginLeft: "calc(-50vw + 50%)", paddingLeft: "150px", paddingRight: "150px" }}>
+          <div className="overflow-hidden">
+            <div className="marquee-left flex gap-8" style={{ width: "max-content" }}>
+              {repeated.map((t, i) => <TestimonialCard key={i} t={t} i={i} />)}
+            </div>
+          </div>
+          <div className="overflow-hidden">
+            <div className="marquee-right flex gap-8" style={{ width: "max-content" }}>
+              {repeated.map((t, i) => <TestimonialCard key={i} t={t} i={i} />)}
+            </div>
+          </div>
         </div>
       </div>
     </section>
