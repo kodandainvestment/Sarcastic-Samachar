@@ -1,5 +1,10 @@
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+
 const PrivacyPolicy = () => {
   return (
+    <div className="bg-background">
+    <Navbar />
     <div
       className="min-h-screen py-20 px-6"
       style={{ background: "#0e0d0b", color: "rgba(255,255,255,0.85)", fontFamily: "'Poppins', sans-serif" }}
@@ -143,6 +148,8 @@ const PrivacyPolicy = () => {
         </p>
 
       </div>
+    </div>
+    <Footer />
     </div>
   );
 };

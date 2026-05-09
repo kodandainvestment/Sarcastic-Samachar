@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, ArrowRight } from "lucide-react";
 import character from "@/assets/character.png";
 
@@ -13,7 +13,7 @@ const NAV_LINKS = [
   { label: "Contact", href: "#collaborate" },
 ];
 
-const scrollTo = (href: string) => {
+const smoothScroll = (href: string) => {
   const el = document.querySelector(href) as HTMLElement;
   if (!el) return;
   const navbar = document.querySelector('nav');
@@ -24,6 +24,17 @@ const scrollTo = (href: string) => {
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavClick = (href: string) => {
+    if (location.pathname === "/") {
+      smoothScroll(href);
+    } else {
+      navigate("/");
+      setTimeout(() => smoothScroll(href), 400);
+    }
+  };
 
   return (
     <nav
@@ -42,7 +53,7 @@ const Navbar = () => {
           {NAV_LINKS.map((link) => (
             <button
               key={link.href}
-              onClick={() => scrollTo(link.href)}
+              onClick={() => handleNavClick(link.href)}
               className="text-sm tracking-wide text-primary-foreground/80 hover:text-white transition-colors"
               style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 700 }}
             >
@@ -54,7 +65,7 @@ const Navbar = () => {
         {/* Desktop CTA */}
         <div className="hidden lg:flex ml-auto">
           <motion.button
-            onClick={() => scrollTo("#collaborate")}
+            onClick={() => handleNavClick("#collaborate")}
             className="px-5 py-2 rounded-full relative overflow-hidden"
             style={{
               background: "rgb(30,28,32)",
@@ -121,7 +132,7 @@ const Navbar = () => {
                   key={link.href}
                   onClick={() => { 
                     setOpen(false);
-                    setTimeout(() => scrollTo(link.href), 300);
+                    setTimeout(() => handleNavClick(link.href), 300);
                   }}
                   className="text-left py-2 px-2 text-primary-foreground/90 hover:text-primary-foreground text-base border-b border-primary-foreground/10 last:border-0"
                   style={{ fontFamily: "'Poppins', sans-serif", fontWeight: 600 }}
@@ -132,7 +143,7 @@ const Navbar = () => {
               <button
                 onClick={() => { 
                   setOpen(false);
-                  setTimeout(() => scrollTo("#collaborate"), 300);
+                  setTimeout(() => handleNavClick("#collaborate"), 300);
                 }}
                 className="mt-3 px-5 py-2 rounded-full self-start"
                 style={{

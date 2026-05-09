@@ -13,4 +13,9 @@ Allow: /
 User-agent: *
 Allow: /
 
+
+Allow: /favicon.ico
+
+Allow: /favicon.png
+
 Sitemap: https://sarcasticsamachar.com/sitemap.xml
